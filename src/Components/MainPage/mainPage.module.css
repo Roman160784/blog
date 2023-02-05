@@ -1,0 +1,13 @@
+.mainBlock{
+    display: flex;
+    /* align-items: center; */
+    /* background-color: aquamarine; */
+}
+
+.child1{
+    width: 11%;
+}
+.child2{
+    width: 89%;
+    background-color: rgb(233, 235, 241);
+}

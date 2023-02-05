@@ -1,0 +1,17 @@
+.blogBlock{
+    display: flex;
+}
+
+.avatar {
+    height: 85%;
+    width: 85%;
+    border-radius: 50%;
+}
+
+.link{
+    text-decoration: none
+}
+
+.discription {
+    margin-top: 2%;
+}

@@ -1,0 +1,38 @@
+.inputBlock{
+    display: flex;
+    align-content: space-between;
+    flex-wrap: wrap;
+      margin-bottom: 0.5%;
+      margin-top: 1%;
+}
+
+    .child1{
+        width: 70%;
+    }
+    .child2{
+        width: 30%;
+    }
+    .child3{
+        margin-top: 1%;
+        width: 100%;
+    }
+   
+.title{
+    margin-left: 1.9%;
+    
+}
+
+.search{
+    margin-left: 2.5%; 
+    width: 60%;
+}
+
+.blogs{
+    margin-left: 1.7%;   
+}
+
+.select{
+    width: 40%;
+}
+
+
