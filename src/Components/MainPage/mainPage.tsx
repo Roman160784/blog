@@ -5,6 +5,9 @@ import { SiteBar } from '../SiteBar/siteBar';
 import st from './mainPage.module.css'
 
 export const MainPage = () => {
+
+    
+
     return (
         <div>
             <div>

@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import {  useSelector } from 'react-redux';
+import { getBlogsTC } from '../../redux/BlogReducer';
+import { selectBlogs } from '../../redux/selectors/blogs-selectors';
+import { useAppDispatch } from '../../redux/store';
 import { Blog } from './Blog/blog';
 import st from './blogs.module.css'
 
 export const Blogs = () => {
+
+    const blog = useSelector(selectBlogs)
+    const dispatch = useAppDispatch() 
+
+    useEffect(() => {
+      dispatch(getBlogsTC())
+    }, [])
+    
+
+
     return (
         <div className={st.blogColor}>
             <div>
@@ -23,7 +37,17 @@ export const Blogs = () => {
                 </div>
                 <div className={st.child3}>
                     <div className={st.blogs}>
-                        <Blog/>
+                        {
+                            blog.map(b => {
+                                return(
+                                    <div key={b.id}>
+                                    <Blog blog={b}  />
+                                    <hr />
+                                    </div>
+                                )
+                            })
+                        }
+                        
                     </div>
                 </div>
             </div>
