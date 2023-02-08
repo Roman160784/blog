@@ -14,7 +14,7 @@ export const Blog = ({blog, ...props}: BlogsPrpsType) => {
                  alt="avatar" />
             </div>
             
-            <div>
+            <div className={st.textBlog}>
                 <div>
                 <h5>{blog.name}</h5>
                 </div>

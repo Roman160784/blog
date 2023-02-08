@@ -5,9 +5,9 @@ import { MainPage } from './Components/MainPage/mainPage';
 
 function App() {
   return (
-    <div>
+    < >
       <MainPage/>
-    </div>
+    </>
 
   );
 }

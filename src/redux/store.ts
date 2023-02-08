@@ -2,9 +2,11 @@ import { combineReducers, configureStore, Middleware } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import thunkMiddleware from "redux-thunk";
 import { BlogsReducer } from "./BlogReducer";
+import { PostsReducer } from "./PostsReducer";
 
 const rootReducer = combineReducers({
     blogs: BlogsReducer,
+    posts: PostsReducer,
 })
 
 export type RootReducerType = ReturnType<typeof rootReducer>

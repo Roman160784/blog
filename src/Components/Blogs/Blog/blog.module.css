@@ -3,8 +3,8 @@
 }
 
 .avatar {
-    height: 85%;
-    width: 85%;
+    height: 130px;
+    width: 130px;
     border-radius: 50%;
 }
 
@@ -14,4 +14,8 @@
 
 .discription {
     margin-top: 2%;
+}
+
+.textBlog{
+    margin-left: 50px;
 }

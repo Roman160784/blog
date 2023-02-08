@@ -49,12 +49,7 @@ const slice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(getBlogsTC.fulfilled, (state, action) => {
-     
-      // action.payload?.data && (state = action.payload?.data)
         return action.payload?.data
-        // return action.payload
-      
-      
     })
     builder.addCase(getBlogsTC.rejected, (state, { payload }) => {
       //to do something inside

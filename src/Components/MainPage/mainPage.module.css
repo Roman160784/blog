@@ -1,3 +1,9 @@
+
+.wrapper{
+    border-left-color: blueviolet;
+}
+
+
 .mainBlock{
     display: flex;
     /* align-items: center; */
@@ -11,3 +17,4 @@
     width: 89%;
     background-color: rgb(233, 235, 241);
 }
+

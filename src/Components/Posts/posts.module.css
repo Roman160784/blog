@@ -1,0 +1,33 @@
+.mainPostsBlock{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.postBlock{
+    max-width: 32%;
+    margin-right: 10px;
+    list-style-type: none;
+}
+
+
+.postBlock:last-child{
+    margin-right: 0x;
+}
+
+.title{
+    margin-left: 1.9%;
+}
+
+.search {
+    margin-left: 80%;
+    margin-bottom: 1.5%;
+}
+
+.searchInput {
+    width: 50%;
+}
+
