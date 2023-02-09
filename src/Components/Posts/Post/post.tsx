@@ -1,5 +1,6 @@
 import React from 'react';
-import { PostType } from '../../../redux/PostsReducer';
+import { getPostTC, PostType } from '../../../redux/PostsReducer';
+import { useAppDispatch } from '../../../redux/store';
 import st from './post.module.css'
 
 type PostPropType = {
@@ -7,10 +8,16 @@ type PostPropType = {
 }
 
 export const Post = ({ post, ...props }: PostPropType) => {
- 
+
+
+    const dispatch = useAppDispatch() 
+
+    const onClickPostHandler = (id: string) => {
+        dispatch(getPostTC({id}))
+    }
 
     return (
-        <div className={st.container}>
+        <div className={st.container} onClick={()=> onClickPostHandler(post.id)}>
             <img className={st.picture} src="https://st2.depositphotos.com/1006899/8421/i/600/depositphotos_84219350-stock-photo-word-blog-suspended-by-ropes.jpg" alt="post picture" />
 
 

@@ -16,11 +16,7 @@ export const MainPage = () => {
 
     return (
         <div className={st.wrapper}>
-            
-            
                 <Header />
-            
-            
             <div className={st.mainBlock}>
                 <div className={st.child1}>
                 <SaiteBarNav />

@@ -22,23 +22,36 @@ export type BlogType = {
 
 export const getBlogsTC = createAsyncThunk(
   'blogs/getBlogs',
-  async (param, { dispatch:  rejectWithValue }) => {
+  async (param, { dispatch: rejectWithValue }) => {
     try {
       const res = await blogsAPI.getBlogs()
-      return {data:res.data}
+      return { data: res.data }
     } catch (e: any) {
       //return rejectedWithValue({Error: что то описать})
     }
   })
+
+export const getBlogTC = createAsyncThunk(
+  'blogs/getBlog',
+  async (param: { blogId: string }, { dispatch: rejectWithValue }) => {
+    try {
+      const res = await blogsAPI.getBlog(param.blogId)
+      return { data: res.data }
+    } catch (e: any) {
+      //return rejectedWithValue({Error: что то описать})
+    }
+  }
+)
+
+
 
 const initialState: BlogsType = {
   pagesCount: 0,
   page: 0,
   pageSize: 0,
   totalCount: 0,
-  items: []
+  items: [],
 }
-
 
 
 const slice = createSlice({
@@ -49,9 +62,15 @@ const slice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(getBlogsTC.fulfilled, (state, action) => {
-        return action.payload?.data
+      return action.payload?.data
     })
     builder.addCase(getBlogsTC.rejected, (state, { payload }) => {
+      //to do something inside
+    })
+    builder.addCase(getBlogTC.fulfilled, (state, action) => {
+     return  action.payload?.data
+    })
+    builder.addCase(getBlogTC.rejected, (state, { payload }) => {
       //to do something inside
     })
   }

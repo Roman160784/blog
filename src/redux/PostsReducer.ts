@@ -2,11 +2,11 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { postsAPI } from "../api/bloggerPlatformAPI";
 
 export type PostsType = {
-        pagesCount: number
-        page: number
-        pageSize: number
-        totalCount: number
-        items: PostType[]   
+    pagesCount: number
+    page: number
+    pageSize: number
+    totalCount: number
+    items: PostType[]
 }
 
 export type PostType = {
@@ -23,29 +23,41 @@ export type PostType = {
 
 export const getPostsTC = createAsyncThunk(
     'posts/getPosts',
-    async (param, { dispatch:  rejectWithValue }) => {
-        try{
+    async (param, { dispatch: rejectWithValue }) => {
+        try {
             const res = await postsAPI.getPosts()
-            return {data: res.data}
+            return { data: res.data }
         } catch (e: any) {
-           //return rejectedWithValue({Error: что то описать}) 
+            //return rejectedWithValue({Error: что то описать}) 
+        }
+    }
+)
+
+export const getPostTC = createAsyncThunk(
+    'posts/getPost',
+    async (param: { id: string }, { dispatch: rejectWithValue }) => {
+        try {
+            const res = await postsAPI.getPost(param.id)
+            return { data: res.data }
+        } catch (e: any) {
+            //return rejectedWithValue({Error: что то описать}) 
         }
     }
 )
 
 const initialState: PostsType = {
-        pagesCount: 0,
-        page: 0,
-        pageSize: 0,
-        totalCount: 0,
-        items: []   
+    pagesCount: 0,
+    page: 0,
+    pageSize: 0,
+    totalCount: 0,
+    items: []
 }
 
-const slice = createSlice ({
+const slice = createSlice({
     name: 'posts',
     initialState: initialState,
     reducers: {
-  
+
     },
     extraReducers: builder => {
         builder.addCase(getPostsTC.fulfilled, (state, action) => {
@@ -53,7 +65,13 @@ const slice = createSlice ({
         })
         builder.addCase(getPostsTC.rejected, (state, { payload }) => {
             //to do something inside
-          })
+        })
+        builder.addCase(getPostTC.fulfilled, (state, action) => {
+            return action.payload?.data
+        })
+        builder.addCase(getPostTC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
     }
 })
 
