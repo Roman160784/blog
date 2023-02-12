@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { BlogsType } from "../redux/BlogReducer";
 import { getPostsTC, PostsType, PostType } from "../redux/PostsReducer";
 
@@ -9,13 +9,26 @@ import { getPostsTC, PostsType, PostType } from "../redux/PostsReducer";
       },
 })
 
+export type OneBlogResponseType ={
+    id: string
+    name: string
+    description: string
+    websiteUrl: string
+}
+
 export const blogsAPI = {
     
     getBlogs() {
         return  instance.get<BlogsType>('blogs')  
     },
-    getBlog(blogId: string) {
+    getOneBlog(id: string){
+        return instance.get<{ id: string }, AxiosResponse <OneBlogResponseType>>(`blogs/${id}`)
+    },
+    getBlogsPosts(blogId: string) {
         return instance.get<BlogsType>(`blogs/${blogId}/posts`)
+    },
+    addBlog(){
+
     }
 }
 
@@ -25,6 +38,9 @@ export const postsAPI = {
     },
     getPost(id: string) {
         return instance.get<PostsType>(`posts/${id}`)
+    },
+    addPost() {
+
     }
 }
 

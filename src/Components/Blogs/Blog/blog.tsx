@@ -1,6 +1,8 @@
 import React from 'react';
-import { BlogType, getBlogTC } from '../../../redux/BlogReducer';
+import { useNavigate } from 'react-router-dom';
+import { BlogType } from '../../../redux/BlogReducer';
 import { useAppDispatch } from '../../../redux/store';
+import { pathSiteBarEnum } from '../../MainPage/mainPage';
 import st from './blog.module.css'
 
 type BlogsPrpsType = {
@@ -11,11 +13,10 @@ type BlogsPrpsType = {
 
 export const Blog = ({blog, ...props}: BlogsPrpsType) => {
 
-    
-    const dispatch = useAppDispatch() 
+    const navigate = useNavigate() 
 
     const onClickBlogHandler = (blogId: string) => {
-        dispatch(getBlogTC({blogId}))
+        navigate(`/oneBlogPage/${blogId}`)
     }
     return(
         <div className={st.blogBlock} 

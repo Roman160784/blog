@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import st from './siteBar.module.css'
 
 export enum pathSiteBarEnum {
     blogs = '/',
@@ -11,15 +12,15 @@ export enum pathSiteBarEnum {
 export const SaiteBarNav = () => {
     return (
         <nav>
-            <div style={{ marginLeft: 50 }}>
+            <div className={st.mainBlock}>
                 <div>
-                    <NavLink style={{ textDecoration: 'none' }} to={pathSiteBarEnum.blogs}>
-                        <h4> Blogs</h4>
+                    <NavLink className={st.navigation} to={pathSiteBarEnum.blogs}>
+                        <h4 className={st.navigation}> Blogs</h4>
                     </NavLink>
                 </div>
                 <div>
-                    <NavLink style={{ textDecoration: 'none' }} to={pathSiteBarEnum.posts}>
-                        <h4> Posts</h4>
+                    <NavLink className={st.navigation} to={pathSiteBarEnum.posts}>
+                        <h4 className={st.navigation}> Posts</h4>
                     </NavLink>
                 </div>
             </div>

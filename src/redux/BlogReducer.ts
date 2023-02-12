@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import thunk from "redux-thunk"
-import { blogsAPI } from "../api/bloggerPlatformAPI"
+import { blogsAPI, OneBlogResponseType } from "../api/bloggerPlatformAPI"
 
 export type BlogsType = {
   pagesCount: number
@@ -15,8 +15,13 @@ export type BlogType = {
   name: string
   description: string
   websiteUrl: string
-  createdAt: Date
+  createdAt: string
   isMembership: boolean
+}
+
+export type BlogsStateType = {
+  blogs: BlogsType
+  oneBlogPage : OneBlogResponseType
 }
 
 
@@ -25,32 +30,53 @@ export const getBlogsTC = createAsyncThunk(
   async (param, { dispatch: rejectWithValue }) => {
     try {
       const res = await blogsAPI.getBlogs()
-      return { data: res.data }
+      return { data: res.data, }
     } catch (e: any) {
       //return rejectedWithValue({Error: что то описать})
     }
   })
 
-export const getBlogTC = createAsyncThunk(
+export const getBlogsPostsTC = createAsyncThunk(
   'blogs/getBlog',
-  async (param: { blogId: string }, { dispatch: rejectWithValue }) => {
+  async (param: {blogId: string}, { dispatch: rejectWithValue }) => {
     try {
-      const res = await blogsAPI.getBlog(param.blogId)
-      return { data: res.data }
+      const res = await blogsAPI.getBlogsPosts(param.blogId)
+      return { data: res.data,blogId:param.blogId }
     } catch (e: any) {
       //return rejectedWithValue({Error: что то описать})
     }
   }
 )
 
+export const getOneBlogTС = createAsyncThunk(
+  
+  'blogs/getOneBlog',
+  async (param: {id: string}, { dispatch: rejectWithValue }) => {
+    try{
+      const res = await blogsAPI.getOneBlog(param.id)
+      return {data: res.data}
+    }catch(e: any) {
+      //return rejectedWithValue({Error: что то описать})
+    }
+  }
+) 
 
 
-const initialState: BlogsType = {
-  pagesCount: 0,
-  page: 0,
-  pageSize: 0,
-  totalCount: 0,
-  items: [],
+
+const initialState: BlogsStateType = {
+  blogs: {
+    pagesCount: 0,
+    page: 0,
+    pageSize: 0,
+    totalCount: 0,
+    items: []
+  },
+  oneBlogPage: {
+    id: "",
+    name: "",
+    description: "",
+    websiteUrl: ""
+  }
 }
 
 
@@ -62,15 +88,30 @@ const slice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(getBlogsTC.fulfilled, (state, action) => {
-      return action.payload?.data
+      const allBlogs = action.payload?.data
+      if(allBlogs) {
+        state.blogs = allBlogs
+      }
+      return state
     })
     builder.addCase(getBlogsTC.rejected, (state, { payload }) => {
       //to do something inside
     })
-    builder.addCase(getBlogTC.fulfilled, (state, action) => {
-     return  action.payload?.data
+    //
+    builder.addCase(getBlogsPostsTC.fulfilled, (state, action) => {
+      return state
     })
-    builder.addCase(getBlogTC.rejected, (state, { payload }) => {
+    builder.addCase(getBlogsPostsTC.rejected, (state, { payload }) => {
+      //to do something inside
+    })
+    //
+    builder.addCase(getOneBlogTС.fulfilled, (state, action) =>{
+      if(action.payload?.data){
+        state.oneBlogPage = action.payload.data
+      }
+      return state
+    })
+    builder.addCase(getOneBlogTС.rejected, (state, { payload }) => {
       //to do something inside
     })
   }

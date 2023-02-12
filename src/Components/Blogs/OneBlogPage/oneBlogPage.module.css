@@ -1,0 +1,26 @@
+
+
+
+.picture{
+    margin-top: 20;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+
+.block {
+    display: flex;
+    margin-left: 20px;
+}
+
+.avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-left: 20px;
+}
+
+.backButton{
+    margin-bottom: 10px;
+    margin-left: 20px;
+    margin-top: 30px;
+}

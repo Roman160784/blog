@@ -1,4 +1,5 @@
 import { RootReducerType } from "../store";
 
 
-export const selectBlogs = (state: RootReducerType) => state.blogs.items
+export const selectBlogs = (state: RootReducerType) => state.blogs.blogs.items
+export const selectBlogPage = (state: RootReducerType) => state.blogs.oneBlogPage

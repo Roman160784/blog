@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getPostTC, PostType } from '../../../redux/PostsReducer';
 import { useAppDispatch } from '../../../redux/store';
 import st from './post.module.css'
@@ -9,11 +10,10 @@ type PostPropType = {
 
 export const Post = ({ post, ...props }: PostPropType) => {
 
-
-    const dispatch = useAppDispatch() 
-
+    const navigate = useNavigate() 
+    
     const onClickPostHandler = (id: string) => {
-        dispatch(getPostTC({id}))
+        navigate(`/postPage/${id}`)
     }
 
     return (
