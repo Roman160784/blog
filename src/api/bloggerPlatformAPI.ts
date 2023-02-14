@@ -8,9 +8,21 @@ import { getPostsTC, PostsType, PostType } from "../redux/PostsReducer";
         Authorization: "Basic YWRtaW46cXdlcnR5",
       },
 })
+ export const AdminInstance = axios.create({
+    baseURL: 'https://ht-02-03.vercel.app/api/',
+    headers: {
+        Authorization: "Basic YWRtaW46cXdlcnR5",
+      },
+})
 
 export type OneBlogResponseType ={
     id: string
+    name: string
+    description: string
+    websiteUrl: string
+}
+
+export type AddBlogType = {
     name: string
     description: string
     websiteUrl: string
@@ -27,8 +39,10 @@ export const blogsAPI = {
     getBlogsPosts(blogId: string) {
         return instance.get<BlogsType>(`blogs/${blogId}/posts`)
     },
-    addBlog(){
-
+    addBlog(fields: AddBlogType){
+        console.log(fields);
+        
+        return AdminInstance.post<AddBlogType>('blogs', fields)
     }
 }
 

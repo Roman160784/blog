@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from '../../Common/Button/button';
 import { Modal } from '../../Common/Modal/modal';
-import { getBlogsTC } from '../../redux/BlogReducer';
+import { addBlogTC, getBlogsTC } from '../../redux/BlogReducer';
 import { selectBlogs } from '../../redux/selectors/blogs-selectors';
 import { useAppDispatch } from '../../redux/store';
 import { Blog } from './Blog/blog';
 import { useForm } from 'react-hook-form';
 import st from './blogs.module.css'
+import { AddBlogType } from '../../api/bloggerPlatformAPI';
 
 export const Blogs = () => {
 
@@ -18,54 +19,62 @@ export const Blogs = () => {
         dispatch(getBlogsTC())
     }, [])
 
-    
-    const {
-        register, handleSubmit, formState: { errors }, formState} = useForm({
-            mode: 'onBlur',
-        defaultValues: {
-            name: '',
-            description: '',
-            websiteUrl: '',
-        }
-      });
 
-      const onSubmit = (data: any) => {
-        alert(JSON.stringify(data))
-      }
+    const {
+        register, handleSubmit, formState: { errors }, formState } = useForm({
+            mode: 'onBlur',
+            defaultValues: {
+                name: '',
+                description: '',
+                websiteUrl: '',
+            }
+        });
+
+    const onSubmit = (data: any) => {
+        const args = data
+        dispatch(addBlogTC({ args }))
+    }
 
     return (
         <div className={st.blogColor}>
-                <h3 className={st.title}>Blogs</h3>
-               
-                <div className={st.buttonAdd}>
-                    <Button title={'Add new Blog'} onClick={() => { }} />
-                </div>
-                <hr />
-               
-                <Modal active={true} setActive={undefined} >
-                    <div className={st.modalBlock}>
+            <h3 className={st.title}>Blogs</h3>
+
+            <div className={st.buttonAdd}>
+                <Button title={'Add new Blog'} onClick={() => { }} />
+            </div>
+            <hr />
+
+            <Modal active={true} setActive={undefined} >
+                <div className={st.modalBlock}>
                     <button className={st.closeButton}>X</button>
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <div className={st.titleInput}>Name    
-                                <input className={st.inputForm} {...register('name', {required: 'obligatory Field'})}  />
-                            </div>
-                            <div>{errors?.name && <p>{errors.name.message || 'Error'}</p>}</div>
-                            <div className={st.titleInput}>about
-                                <input className={st.inputForm} {...register('description', {required: 'obligatory Field'})} />
-                            </div>
-                            <div>{errors.description && <p>{errors.description.message || 'Error'}</p>}</div>
-                            <div className={st.titleInput}>website
-                                <input className={st.inputForm} {...register('websiteUrl', {required: 'obligatory Field'})} />
-                            </div>
-                            <div>{errors.websiteUrl && <p>{errors.websiteUrl.message || 'Error'}</p>}</div>
-                            <input className={st.createBlogButton} type="submit" value='Create blog' />
-                        </form>
-                        <div>
-                            
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <div className={st.titleInput}>Name
+                            <input placeholder='name' className={st.inputForm} {...register('name', {
+                                required: 'field is required',
+                                maxLength: { value: 15, message: 'Max Length 15' },
+                            })} />
                         </div>
+                        <div>{errors?.name && <p>{errors.name.message || 'Error'}</p>}</div>
+                        <div className={st.titleInput}>about
+                            <input placeholder='discription' className={st.inputForm} {...register('description', {
+                                required: 'field is required',
+                                maxLength: { value: 500, message: 'Max Length 500' },
+                            })} />
+                        </div>
+                        <div>{errors.description && <p>{errors.description.message || 'Error'}</p>}</div>
+                        <div className={st.titleInput}>website
+                            <input placeholder='www.xxx.com' className={st.inputForm} {...register('websiteUrl', { 
+                                required: 'field is required' })} />
+                        </div>
+                        <div>{errors.websiteUrl && <p>{errors.websiteUrl.message || 'Error'}</p>}</div>
+                        <input className={st.createBlogButton} type="submit" value='Create blog' />
+                    </form>
+                    <div>
+
                     </div>
-                </Modal>
-                
+                </div>
+            </Modal>
+
             <div className={st.inputBlock}>
                 <div className={st.child1}>
                     <input className={st.search} placeholder='search' type="text" />

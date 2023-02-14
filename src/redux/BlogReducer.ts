@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import thunk from "redux-thunk"
-import { blogsAPI, OneBlogResponseType } from "../api/bloggerPlatformAPI"
+import { blogsAPI, OneBlogResponseType, AddBlogType } from "../api/bloggerPlatformAPI"
 
 export type BlogsType = {
   pagesCount: number
@@ -15,8 +15,8 @@ export type BlogType = {
   name: string
   description: string
   websiteUrl: string
-  createdAt: string
-  isMembership: boolean
+  createdAt?: string
+  isMembership?: boolean
 }
 
 export type BlogsStateType = {
@@ -49,7 +49,6 @@ export const getBlogsPostsTC = createAsyncThunk(
 )
 
 export const getOneBlogTС = createAsyncThunk(
-  
   'blogs/getOneBlog',
   async (param: {id: string}, { dispatch: rejectWithValue }) => {
     try{
@@ -60,6 +59,19 @@ export const getOneBlogTС = createAsyncThunk(
     }
   }
 ) 
+
+export const addBlogTC = createAsyncThunk(
+  'blogs/addBlog',
+  async (param: {args: AddBlogType}, { dispatch: rejectWithValue }) => {
+    try{
+      const res = await blogsAPI.addBlog(param.args)
+      return {data: res.data}
+    }catch (e: any) {
+      return rejectWithValue(e)
+    }
+
+  }
+)
 
 
 
@@ -112,6 +124,13 @@ const slice = createSlice({
       return state
     })
     builder.addCase(getOneBlogTС.rejected, (state, { payload }) => {
+      //to do something inside
+    })
+    builder.addCase(addBlogTC.fulfilled, (state, action) => {
+      state.blogs.items.push(action.payload)
+      return state
+    })
+    builder.addCase(addBlogTC.rejected, (state, { payload }) => {
       //to do something inside
     })
   }
