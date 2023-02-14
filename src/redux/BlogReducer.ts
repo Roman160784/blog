@@ -65,6 +65,7 @@ export const addBlogTC = createAsyncThunk(
   async (param: {args: AddBlogType}, { dispatch: rejectWithValue }) => {
     try{
       const res = await blogsAPI.addBlog(param.args)
+      debugger
       return {data: res.data}
     }catch (e: any) {
       return rejectWithValue(e)
@@ -127,7 +128,8 @@ const slice = createSlice({
       //to do something inside
     })
     builder.addCase(addBlogTC.fulfilled, (state, action) => {
-      state.blogs.items.push(action.payload)
+
+      state.blogs.items.unshift(action.payload.data)
       return state
     })
     builder.addCase(addBlogTC.rejected, (state, { payload }) => {

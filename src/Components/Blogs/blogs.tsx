@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from '../../Common/Button/button';
 import { Modal } from '../../Common/Modal/modal';
@@ -12,8 +12,11 @@ import { AddBlogType } from '../../api/bloggerPlatformAPI';
 
 export const Blogs = () => {
 
+    const [modalActive, setModalActive] = useState<boolean>(false);
+
     const blog = useSelector(selectBlogs)
     const dispatch = useAppDispatch()
+  
 
     useEffect(() => {
         dispatch(getBlogsTC())
@@ -21,7 +24,7 @@ export const Blogs = () => {
 
 
     const {
-        register, handleSubmit, formState: { errors }, formState } = useForm({
+        register, handleSubmit, formState: { errors }, formState, reset } = useForm({
             mode: 'onBlur',
             defaultValues: {
                 name: '',
@@ -30,9 +33,15 @@ export const Blogs = () => {
             }
         });
 
-    const onSubmit = (data: any) => {
-        const args = data
+    const onSubmit = (args: any) => {
         dispatch(addBlogTC({ args }))
+        setActiveForModal()
+    }
+
+
+    const setActiveForModal = () => {
+        setModalActive(false)
+        reset()  
     }
 
     return (
@@ -40,13 +49,13 @@ export const Blogs = () => {
             <h3 className={st.title}>Blogs</h3>
 
             <div className={st.buttonAdd}>
-                <Button title={'Add new Blog'} onClick={() => { }} />
+                <Button title={'Add new Blog'} onClick={() => { setModalActive(true)}} />
             </div>
             <hr />
 
-            <Modal active={true} setActive={undefined} >
+            <Modal active={modalActive} setActive={setActiveForModal} >
                 <div className={st.modalBlock}>
-                    <button className={st.closeButton}>X</button>
+                    <button onClick={setActiveForModal} className={st.closeButton}>X</button>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className={st.titleInput}>Name
                             <input placeholder='name' className={st.inputForm} {...register('name', {
@@ -67,7 +76,7 @@ export const Blogs = () => {
                                 required: 'field is required' })} />
                         </div>
                         <div>{errors.websiteUrl && <p>{errors.websiteUrl.message || 'Error'}</p>}</div>
-                        <input className={st.createBlogButton} type="submit" value='Create blog' />
+                        <input  className={st.createBlogButton}  type="submit" value='Create blog' />
                     </form>
                     <div>
 
