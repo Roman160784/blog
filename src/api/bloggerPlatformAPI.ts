@@ -40,9 +40,10 @@ export const blogsAPI = {
         return instance.get<BlogsType>(`blogs/${blogId}/posts`)
     },
     addBlog(fields: AddBlogType){
-        console.log(fields);
-        
         return AdminInstance.post<AddBlogType>('blogs', fields)
+    },
+    removeBlog(id: string){
+        return AdminInstance.delete(`blogs/${id}`)
     }
 }
 

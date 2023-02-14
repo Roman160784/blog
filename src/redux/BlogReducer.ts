@@ -65,12 +65,22 @@ export const addBlogTC = createAsyncThunk(
   async (param: {args: AddBlogType}, { dispatch: rejectWithValue }) => {
     try{
       const res = await blogsAPI.addBlog(param.args)
-      debugger
       return {data: res.data}
     }catch (e: any) {
       return rejectWithValue(e)
     }
+  }
+)
 
+export const removeBlogTC = createAsyncThunk(
+  'blogs/removeBlog',
+  async (param: {id: string}, { dispatch: rejectWithValue }) =>{
+    try{
+      await blogsAPI.removeBlog(param.id)
+      return param.id
+    }catch (e: any) {
+      return rejectWithValue(e)
+    }
   }
 )
 
@@ -107,13 +117,14 @@ const slice = createSlice({
       }
       return state
     })
+    //Get Blogs
     builder.addCase(getBlogsTC.rejected, (state, { payload }) => {
       //to do something inside
     })
-    //
     builder.addCase(getBlogsPostsTC.fulfilled, (state, action) => {
       return state
     })
+    //Get Plog's posts
     builder.addCase(getBlogsPostsTC.rejected, (state, { payload }) => {
       //to do something inside
     })
@@ -124,15 +135,24 @@ const slice = createSlice({
       }
       return state
     })
+    //Get one Blog
     builder.addCase(getOneBlogTС.rejected, (state, { payload }) => {
       //to do something inside
     })
+    // Add Blog
     builder.addCase(addBlogTC.fulfilled, (state, action) => {
-
       state.blogs.items.unshift(action.payload.data)
       return state
     })
     builder.addCase(addBlogTC.rejected, (state, { payload }) => {
+      //to do something inside
+    })
+    // Remove Blog
+    builder.addCase(removeBlogTC.fulfilled, (state, action) => {
+       state.blogs.items.forEach((el, i) => el.id === action.payload ? state.blogs.items.splice(i, 1) : el)
+      return state
+    })
+    builder.addCase(removeBlogTC.rejected, (state, { payload }) => {
       //to do something inside
     })
   }
