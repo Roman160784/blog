@@ -44,6 +44,9 @@ export const blogsAPI = {
     },
     removeBlog(id: string){
         return AdminInstance.delete(`blogs/${id}`)
+    },
+    updateBlog(id: string, param: AddBlogType){
+        return AdminInstance.put<AddBlogType>(`blogs/${id}`, param)
     }
 }
 

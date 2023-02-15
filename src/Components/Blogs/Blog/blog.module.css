@@ -60,3 +60,45 @@
     justify-content: space-around;
 }
 
+.closeButton{
+    margin-top: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: red;
+    margin-left: 470px;
+}
+
+.titleModal{
+    font-size: 20px;
+}
+
+.modalBlockUpdate{
+    background-color: rgb(173, 189, 185);
+    border-radius: 10px;
+}
+
+.modalInputUpdate{
+    margin-left: 10px;
+    margin-top: 10px;
+    width: 370px;
+    height: 40px;
+    padding-left: 15px;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+.updateButton {
+    width: 120px;
+    height: 41px;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    background-color: green;
+}
+
+.modalUpdateTitle{
+    font-size: 25px;
+}
+

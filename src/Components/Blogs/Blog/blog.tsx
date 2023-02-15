@@ -1,7 +1,9 @@
+import { stringify } from 'querystring';
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Modal } from '../../../Common/Modal/modal';
-import { BlogType, removeBlogTC } from '../../../redux/BlogReducer';
+import { BlogType, removeBlogTC, updateBlogTC } from '../../../redux/BlogReducer';
 import { useAppDispatch } from '../../../redux/store';
 import st from './blog.module.css'
 
@@ -16,6 +18,23 @@ export const Blog = ({ blog, ...props }: BlogsPrpsType) => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const [active, setActive] = useState<boolean>(false)
+    const [updateModalActive, setupdateModalActive] = useState<boolean>(false)
+    const [id, setId] = useState('')
+
+    const {
+        register, handleSubmit, formState: { errors }, formState, reset } = useForm({
+            mode: 'onBlur',
+            defaultValues: {
+                name: '',
+                description: '',
+                websiteUrl: '',
+            }
+        });
+
+    const onSubmit = (args: any) => {
+        dispatch(updateBlogTC({id, args}))
+        setupdateModalActive(false)
+    }
 
     const onClickBlogHandler = (blogId: string) => {
         navigate(`/oneBlogPage/${blogId}`)
@@ -23,7 +42,6 @@ export const Blog = ({ blog, ...props }: BlogsPrpsType) => {
 
     const removeBlogHandler = () => {
         setActive(true)
-        
     }
     
     const buttonNoHandler = () => {
@@ -34,6 +52,18 @@ export const Blog = ({ blog, ...props }: BlogsPrpsType) => {
          dispatch(removeBlogTC({id}))
         setActive(false)
     }
+
+    const updateBlogHandler = (id: string) => {
+        setId(id)
+        setupdateModalActive(true)
+    }
+
+    const closeUpdateModalHandler = () => {
+        setupdateModalActive(false)
+        reset()
+    }
+
+
 
     return (
         <div>
@@ -47,8 +77,39 @@ export const Blog = ({ blog, ...props }: BlogsPrpsType) => {
                 </div>
             </Modal>
              <button className={st.buttonRemove} onClick={removeBlogHandler}>Remove blog</button>
-        <div className={st.blogBlock}
-            onClick={() => onClickBlogHandler(blog.id)}>
+
+             <button className={st.buttonRemove} onClick={() => {updateBlogHandler(blog.id)}}>Update blog</button>
+        <div className={st.blogBlock}>
+                <Modal active={updateModalActive} setActive={undefined} >
+                    <div className={st.modalBlockUpdate}>
+                        <div><button onClick={closeUpdateModalHandler} className={st.closeButton}>X</button></div>
+                            <h4 className={st.titleModal}>Update Blog</h4>
+                            <div>
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                            <div className={st.modalUpdateTitle}>Name
+                            <input  placeholder='Name' className={st.modalInputUpdate} {...register('name', {
+                                required: 'field is required',
+                                maxLength: { value: 15, message: 'Max Length 15' },
+                            })} />
+                        </div>
+                        <div>{errors?.name && <p>{errors.name.message || 'Error'}</p>}</div>
+                        <div className={st.modalUpdateTitle}>about
+                            <input  placeholder='discription' className={st.modalInputUpdate} {...register('description', {
+                                required: 'field is required',
+                                maxLength: { value: 500, message: 'Max Length 500' },
+                            })} />
+                        </div>
+                        <div>{errors.description && <p>{errors.description.message || 'Error'}</p>}</div>
+                        <div className={st.modalUpdateTitle}>website
+                            <input  placeholder='www.xxx.com' className={st.modalInputUpdate} {...register('websiteUrl', { 
+                                required: 'field is required' })} />
+                        </div>
+                        <div>{errors.websiteUrl && <p>{errors.websiteUrl.message || 'Error'}</p>}</div>
+                        <input  className={st.updateButton}  type="submit" value='Update Blog' />
+                            </form>
+                            </div>
+                    </div>
+                </Modal>
             <div>
                 <img className={st.avatar} src="https://d11a6trkgmumsb.cloudfront.net/original/3X/d/8/d8b5d0a738295345ebd8934b859fa1fca1c8c6ad.jpeg"
                     alt="avatar" />
@@ -56,7 +117,7 @@ export const Blog = ({ blog, ...props }: BlogsPrpsType) => {
 
             <div className={st.textBlog}>
                 <div>
-                    <h5>{blog.name}</h5>
+                    <h5 onClick={() => onClickBlogHandler(blog.id)}>{blog.name}</h5>
                 </div>
                 <div>
                     <span>Website:</span>
