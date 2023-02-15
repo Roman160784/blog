@@ -41,14 +41,14 @@ export const OneBlogPage = () => {
                 <img className={st.avatar} src="https://freelance.ru/img/portfolio/pics/00/3F/3A/4143866.jpg" alt="ava" />
                 </div>
                 <div style={{marginLeft: 20}}>
-                <div>
-                    <h4>{blogPage.name}</h4>
+                <div> 
+                    <h4> Name: {blogPage.name}</h4>
                 </div>
                 <div>
                 <span>Website:  </span>
-                <a href={blogPage.websiteUrl}>link</a>
+                <a href={blogPage.websiteUrl}>{blogPage.websiteUrl}</a>
                 <div>
-                    <span>{blogPage.description}</span>
+                    <span>Discription:  {blogPage.description}</span>
                 </div>
                 </div>
                 </div>

@@ -169,10 +169,10 @@ const slice = createSlice({
     })
     // Update Blog не правильно
     builder.addCase(updateBlogTC.fulfilled, (state, action) => {
-      console.log(action.payload.args);
-      state.blogs.items.forEach(b => b.id === action.payload.id ? b.name = action.payload.args.name : b )
-      state.blogs.items.forEach(b => b.id === action.payload.id ? b.description = action.payload.args.description : b )
-      state.blogs.items.forEach(b => b.id === action.payload.id ? b.websiteUrl = action.payload.args.websiteUrl : b )
+      const items = state.blogs.items.map(b=> b.id === action.payload.id 
+        ? { ...b, name : action.payload.args.name, description: action.payload.args.description,
+           websiteUrl: action.payload.args.websiteUrl} : b)
+           state.blogs.items = items
       return state
 
     })
