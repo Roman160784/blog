@@ -21,6 +21,7 @@ export const PostPage = () => {
     const params = useParams<'id'>();
     const id = params.id
 
+
     useEffect(()=> {
         id && dispatch(getPostTC({id}))
     },[])

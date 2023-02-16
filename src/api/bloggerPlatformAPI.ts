@@ -69,6 +69,9 @@ export const postsAPI = {
     },
     removePost(id: string) {
         return instance.delete(`posts/${id}`)
+    },
+    updatePost(id: string, param: CreatePostType) {
+        return instance.put<CreatePostType>(`posts/${id}`, param)
     }
 }
 
