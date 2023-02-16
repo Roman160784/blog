@@ -1,0 +1,68 @@
+
+.pagePostBlok{
+margin-left: 30px;
+}
+
+.nav{
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+.avatar{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-top: 20px;
+}
+
+.blogName{
+    margin-left: 15px;
+    font-size: 25px;
+}
+
+.updateButton{
+    margin-left: 200px;
+}
+
+.blogPicture{
+    margin-top: 20px;
+    width: 700px;
+    height: 400px;
+}
+
+.conrent{
+    margin-top: 30px;
+}
+
+
+.modalBlock{
+    background-color: rgb(216, 239, 232);
+    border-radius: 5px;
+    }
+    
+    .yes {
+        width: 70px;
+        height: 30px;
+        font-style: 17px;
+        margin-bottom: 20px;
+        background-color: green;
+        border-radius: 5px;
+    }
+    .no {
+        margin-left: 50px;
+        width: 70px;
+        height: 30px;
+        font-style: 17px;
+        margin-bottom: 20px;
+        background-color: red;
+        border-radius: 5px;
+    }
+    
+    .buttonBlock{
+    margin-top: 20px;
+    }
+    
+    .modalTitle{
+        font-size: 27px;
+    }
+    

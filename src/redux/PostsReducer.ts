@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { postsAPI } from "../api/bloggerPlatformAPI";
+import { CreatePostType, postsAPI } from "../api/bloggerPlatformAPI";
 
 export type PostsType = {
     pagesCount: number
@@ -19,6 +19,11 @@ export type PostType = {
     createdAt: string
 }
 
+type initialStateType = {
+    posts : PostsType
+    onePost: PostType
+}
+
 
 
 export const getPostsTC = createAsyncThunk(
@@ -26,7 +31,7 @@ export const getPostsTC = createAsyncThunk(
     async (param, { dispatch: rejectWithValue }) => {
         try {
             const res = await postsAPI.getPosts()
-            return { data: res.data }
+            return { data: res.data.items }
         } catch (e: any) {
             //return rejectedWithValue({Error: что то описать}) 
         }
@@ -45,12 +50,47 @@ export const getPostTC = createAsyncThunk(
     }
 )
 
-const initialState: PostsType = {
-    pagesCount: 0,
-    page: 0,
-    pageSize: 0,
-    totalCount: 0,
-    items: []
+export const addPostTC = createAsyncThunk(
+    'posts/createPost',
+    async (param: {args: CreatePostType}, {dispatch: rejectWithValue}) => {
+        try{
+            const res = await postsAPI.addPost(param.args)
+            return {data: res.data}
+        } catch (e: any) {
+            //return rejectedWithValue({Error: что то описать}) 
+        }
+    }
+)
+
+export const removePostTC = createAsyncThunk(
+    'posts/removePost',
+    async (param : {id: string}, {dispatch: rejectWithValue}) => {
+        try {
+            const res = await postsAPI.removePost(param.id)
+            return param.id
+        }catch (e: any) {
+            //return rejectedWithValue({Error: что то описать}) 
+        }
+    }
+)
+
+const initialState: initialStateType = {
+    posts: {
+        pagesCount: 0,
+        page: 0,
+        pageSize: 0,
+        totalCount: 0,
+        items: []
+    },
+    onePost: {
+        id: "",
+        title: "",
+        shortDescription: "",
+        content: "",
+        blogId: "",
+        blogName: "",
+        createdAt: ""
+    }
 }
 
 const slice = createSlice({
@@ -60,16 +100,39 @@ const slice = createSlice({
 
     },
     extraReducers: builder => {
+        //Get all posts
         builder.addCase(getPostsTC.fulfilled, (state, action) => {
-            return action.payload?.data
+            if(action.payload?.data){
+                state.posts.items = action.payload?.data
+            }
+            return state
         })
         builder.addCase(getPostsTC.rejected, (state, { payload }) => {
             //to do something inside
         })
+        //Get one post
         builder.addCase(getPostTC.fulfilled, (state, action) => {
-            return action.payload?.data
+            if(action.payload?.data){
+                state.onePost = action.payload?.data
+            }
+            return state
         })
         builder.addCase(getPostTC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+        //Create post
+        builder.addCase(addPostTC.fulfilled, (state, action) => {
+            return state
+        })
+        builder.addCase(addPostTC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+        //Remove post
+        builder.addCase(removePostTC.fulfilled, (state, action) => {
+            state.posts.items.forEach((el, i) => el.id === action.payload ? state.posts.items.splice(i, 1) : el)
+            return state
+        })
+        builder.addCase(removePostTC.rejected, (state, { payload }) => {
             //to do something inside
         })
     }

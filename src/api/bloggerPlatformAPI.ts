@@ -2,20 +2,20 @@ import axios, { AxiosResponse } from "axios";
 import { BlogsType } from "../redux/BlogReducer";
 import { getPostsTC, PostsType, PostType } from "../redux/PostsReducer";
 
- export const instance = axios.create({
+export const instance = axios.create({
     baseURL: 'https://ht-02-03.vercel.app/api/',
     headers: {
         Authorization: "Basic YWRtaW46cXdlcnR5",
-      },
+    },
 })
- export const AdminInstance = axios.create({
+export const AdminInstance = axios.create({
     baseURL: 'https://ht-02-03.vercel.app/api/',
     headers: {
         Authorization: "Basic YWRtaW46cXdlcnR5",
-      },
+    },
 })
 
-export type OneBlogResponseType ={
+export type OneBlogResponseType = {
     id: string
     name: string
     description: string
@@ -29,25 +29,32 @@ export type AddBlogType = {
 }
 
 export const blogsAPI = {
-    
+
     getBlogs() {
-        return  instance.get<BlogsType>('blogs')  
+        return instance.get<BlogsType>('blogs')
     },
-    getOneBlog(id: string){
-        return instance.get<{ id: string }, AxiosResponse <OneBlogResponseType>>(`blogs/${id}`)
+    getOneBlog(id: string) {
+        return instance.get<{ id: string }, AxiosResponse<OneBlogResponseType>>(`blogs/${id}`)
     },
     getBlogsPosts(blogId: string) {
         return instance.get<BlogsType>(`blogs/${blogId}/posts`)
     },
-    addBlog(fields: AddBlogType){
+    addBlog(fields: AddBlogType) {
         return AdminInstance.post<AddBlogType>('blogs', fields)
     },
-    removeBlog(id: string){
+    removeBlog(id: string) {
         return AdminInstance.delete(`blogs/${id}`)
     },
-    updateBlog(id: string, param: AddBlogType){
+    updateBlog(id: string, param: AddBlogType) {
         return AdminInstance.put<AddBlogType>(`blogs/${id}`, param)
     }
+}
+
+export type CreatePostType = {
+    title: string
+    shortDescription: string
+    content: string
+    blogId: string
 }
 
 export const postsAPI = {
@@ -55,10 +62,13 @@ export const postsAPI = {
         return instance.get<PostsType>('posts')
     },
     getPost(id: string) {
-        return instance.get<PostsType>(`posts/${id}`)
+        return instance.get<PostType>(`posts/${id}`)
     },
-    addPost() {
-
+    addPost(param: CreatePostType) {
+        return instance.post<CreatePostType>(`posts/`, param)
+    },
+    removePost(id: string) {
+        return instance.delete(`posts/${id}`)
     }
 }
 

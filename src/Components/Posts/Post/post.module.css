@@ -24,3 +24,35 @@
 .postBlock {
     display: flex;
 }
+
+.modalBlock{
+background-color: rgb(216, 239, 232);
+border-radius: 5px;
+}
+
+.yes {
+    width: 70px;
+    height: 30px;
+    font-style: 17px;
+    margin-bottom: 20px;
+    background-color: green;
+    border-radius: 5px;
+}
+.no {
+    margin-left: 50px;
+    width: 70px;
+    height: 30px;
+    font-style: 17px;
+    margin-bottom: 20px;
+    background-color: red;
+    border-radius: 5px;
+}
+
+.buttonBlock{
+margin-top: 20px;
+}
+
+.modalTitle{
+    
+    font-size: 27px;
+}

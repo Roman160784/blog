@@ -9,12 +9,14 @@ import st from './posts.module.css'
 export const Posts = () => {
 
     const dispatch = useAppDispatch() 
-    const post = useSelector(selectPosts)
+    
+   
 
     useEffect(() => {
       dispatch(getPostsTC())
     }, [])
 
+    const post = useSelector(selectPosts)
 
     return (
         <div >
@@ -31,6 +33,7 @@ export const Posts = () => {
             <ul className={st.mainPostsBlock}>
                 {
                     post.map(p => {
+                        
                         return (
                             <li className={st.postBlock} key={p.id}>
                                 <Post post={p} />
