@@ -1,68 +1,120 @@
-
-.pagePostBlok{
-margin-left: 30px;
+.pagePostBlok {
+    margin-left: 30px;
 }
 
-.nav{
+.nav {
     margin-top: 20px;
     font-size: 20px;
 }
 
-.avatar{
+.avatar {
     width: 100px;
     height: 100px;
     border-radius: 50%;
     margin-top: 20px;
 }
 
-.blogName{
+.blogName {
     margin-left: 15px;
     font-size: 25px;
 }
 
-.updateButton{
+.updateButton {
     margin-left: 200px;
 }
 
-.blogPicture{
+.blogPicture {
     margin-top: 20px;
     width: 700px;
     height: 400px;
 }
 
-.conrent{
+.conrent {
     margin-top: 30px;
 }
 
 
-.modalBlock{
+.modalBlock {
     background-color: rgb(216, 239, 232);
     border-radius: 5px;
-    }
-    
-    .yes {
-        width: 70px;
-        height: 30px;
-        font-style: 17px;
-        margin-bottom: 20px;
-        background-color: green;
-        border-radius: 5px;
-    }
-    .no {
-        margin-left: 50px;
-        width: 70px;
-        height: 30px;
-        font-style: 17px;
-        margin-bottom: 20px;
-        background-color: red;
-        border-radius: 5px;
-    }
-    
-    .buttonBlock{
+}
+
+.yes {
+    width: 70px;
+    height: 30px;
+    font-style: 17px;
+    margin-bottom: 20px;
+    background-color: green;
+    border-radius: 5px;
+}
+
+.no {
+    margin-left: 50px;
+    width: 70px;
+    height: 30px;
+    font-style: 17px;
+    margin-bottom: 20px;
+    background-color: red;
+    border-radius: 5px;
+}
+
+.buttonBlock {
     margin-top: 20px;
-    }
-    
-    .modalTitle{
-        font-size: 27px;
-    }
-    
+}
+
+.modalTitle {
+    font-size: 27px;
+}
+
+
+.buttonCreatePost {
+    margin-top: 20px;
+}
+
+.modalTitle {
+    font-size: 25px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.modalInput{
+    width: 350px;
+    height: 41px;
+    margin-left: 15px;
+    border-radius: 5px;
+    padding-left: 7px;
+    font-size: 20px;
+}
+
+.createPostBlock{
+    background-color: rgb(205, 233, 233);
+}
+
+.textArea{
+    width: 500px;
+    height: 600px;
+    padding-left: 10px;
+    font-size: 23px;
+    resize: none
+}
+
+.updatePostButton{
+    width: 200px;
+    height: 35px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    font-size: 20px;
+    background-color: green;
+}
+
+.closePostButton{
+    width: 100px;
+    height: 35px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    font-size: 20px;
+    background: red;
+    margin-left: 100px;
+}

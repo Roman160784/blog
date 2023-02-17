@@ -59,19 +59,19 @@ export type CreatePostType = {
 
 export const postsAPI = {
     getPosts() {
-        return instance.get<PostsType>('posts')
+        return AdminInstance.get<PostsType>('posts')
     },
     getPost(id: string) {
-        return instance.get<PostType>(`posts/${id}`)
+        return AdminInstance.get<PostType>(`posts/${id}`)
     },
     addPost(param: CreatePostType) {
-        return instance.post<CreatePostType>(`posts/`, param)
+        return AdminInstance.post<CreatePostType>(`posts/`, param)
     },
     removePost(id: string) {
-        return instance.delete(`posts/${id}`)
+        return AdminInstance.delete(`posts/${id}`)
     },
     updatePost(id: string, param: CreatePostType) {
-        return instance.put<CreatePostType>(`posts/${id}`, param)
+        return AdminInstance.put<CreatePostType>(`posts/${id}`, param)
     }
 }
 

@@ -74,6 +74,18 @@ export const removePostTC = createAsyncThunk(
     }
 )
 
+export const updatePostTC = createAsyncThunk(
+    'posts/updatePost',
+    async (param: {id: string, args: CreatePostType}, {dispatch: rejectWithValue}) => {
+        try{
+            const res = await postsAPI.updatePost(param.id, param.args)
+            return {id: param.id, args: param.args}
+        }catch (e: any) {
+            //return rejectedWithValue({Error: что то описать}) 
+        }
+    }
+)
+
 const initialState: initialStateType = {
     posts: {
         pagesCount: 0,
@@ -133,6 +145,17 @@ const slice = createSlice({
             return state
         })
         builder.addCase(removePostTC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+        //Update post
+        builder.addCase(updatePostTC.fulfilled, (state, action) => {
+            if(action.payload?.args){
+                state.onePost = {...state.onePost, title: action.payload?.args.title, 
+                        shortDescription: action.payload?.args.shortDescription, content: action.payload?.args.content}
+            }  
+            return state
+        })
+        builder.addCase(updatePostTC.rejected, (state, { payload }) => {
             //to do something inside
         })
     }

@@ -19,12 +19,11 @@ export const OneBlogPage = () => {
 
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
-    // const post = useSelector(selectPosts)
     const blogPage = useSelector(selectBlogPage)
     const [modal, setModal] = useState<boolean>(false)
     const [blogId, setBlogId] = useState<string>('')
 
-    // const posts = post.filter(p => p.blogId === blogId)
+
 
     const {
         register, handleSubmit, formState: { errors }, formState, reset } = useForm({
