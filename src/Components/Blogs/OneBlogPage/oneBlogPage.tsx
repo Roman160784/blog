@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Modal } from '../../../Common/Modal/modal';
 import { getOneBlogTС } from '../../../redux/BlogReducer';
 import { addPostTC } from '../../../redux/PostsReducer';
-import { selectBlogPage } from '../../../redux/selectors/blogs-selectors';
+import { postsOfOneBlog, selectBlogPage, selectBlogs } from '../../../redux/selectors/blogs-selectors';
 import { selectPosts } from '../../../redux/selectors/posts-selectors';
 import { useAppDispatch } from '../../../redux/store';
 import { pathSiteBarEnum } from '../../MainPage/mainPage';
@@ -20,9 +20,12 @@ export const OneBlogPage = () => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const blogPage = useSelector(selectBlogPage)
+    const postsOneBlog = useSelector(postsOfOneBlog)
     const [modal, setModal] = useState<boolean>(false)
     const [blogId, setBlogId] = useState<string>('')
 
+
+   
 
 
     const {
@@ -122,16 +125,19 @@ export const OneBlogPage = () => {
                     </Modal>
 
                 </div>
-                {/* {
-                    posts.map(p => {
+                
+            </div>
+            <hr />
+                {
+                    postsOneBlog.items.map(p => {
                         return(
-                            
+                            <div className={st.postsBlock} key={p.id}>
+                            <Post post={p}/>
+                            </div>
                         )
                     })
-                } */}
+                }
               
-
-            </div>
 
         </div>
 

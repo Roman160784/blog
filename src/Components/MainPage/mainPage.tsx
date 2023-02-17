@@ -6,7 +6,6 @@ import { OneBlogPage } from '../Blogs/OneBlogPage/oneBlogPage';
 import { Header } from '../Header/header';
 import { Posts } from '../Posts/posts';
 import { PostPage } from '../Posts/PostsOfBlog/PostPage/postPage';
-import { PostsOfBlog } from '../Posts/PostsOfBlog/postsOfBlog';
 import st from './mainPage.module.css'
 
 
@@ -31,7 +30,6 @@ export const MainPage = () => {
                 <Routes>
                 <Route path={pathSiteBarEnum.blogs} element={<Blogs/>}/>
                 <Route path={pathSiteBarEnum.posts} element={<Posts/>}/>
-                <Route path={pathSiteBarEnum.postsOfBlog} element={<PostsOfBlog/>}/>
                 <Route path={pathSiteBarEnum.postPage} element={<PostPage/>}/>
                 <Route path={pathSiteBarEnum.oneBlogPage} element={<OneBlogPage/>}/>
                 </Routes>

@@ -1,9 +1,9 @@
-import { stringify } from 'querystring';
+
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Modal } from '../../../Common/Modal/modal';
-import { BlogType, removeBlogTC, updateBlogTC } from '../../../redux/BlogReducer';
+import { BlogType, getBlogPostsTC, removeBlogTC, updateBlogTC } from '../../../redux/BlogReducer';
 import { useAppDispatch } from '../../../redux/store';
 import st from './blog.module.css'
 
@@ -38,6 +38,7 @@ export const Blog = ({ blog, ...props }: BlogsPrpsType) => {
 
     const onClickBlogHandler = (blogId: string) => {
         navigate(`/oneBlogPage/${blogId}`)
+        dispatch(getBlogPostsTC({blogId}))
     }
 
     const removeBlogHandler = () => {
