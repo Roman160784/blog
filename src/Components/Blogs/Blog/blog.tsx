@@ -38,7 +38,7 @@ export const Blog = ({ blog, ...props }: BlogsPrpsType) => {
 
     const onClickBlogHandler = (blogId: string) => {
         navigate(`/oneBlogPage/${blogId}`)
-        dispatch(getBlogPostsTC({blogId}))
+        // dispatch(getBlogPostsTC({blogId}))
     }
 
     const removeBlogHandler = () => {

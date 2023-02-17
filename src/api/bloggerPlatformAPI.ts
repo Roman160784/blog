@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { BlogsType } from "../redux/BlogReducer";
+import { BlogsType, BlogType } from "../redux/BlogReducer";
 import { getPostsTC, PostsType, PostType } from "../redux/PostsReducer";
 
 export const instance = axios.create({
@@ -40,13 +40,13 @@ export const blogsAPI = {
         return instance.get<PostsType>(`blogs/${blogId}/posts`)
     },
     addBlog(fields: AddBlogType) {
-        return AdminInstance.post<AddBlogType>('blogs', fields)
+        return AdminInstance.post<BlogType>('blogs', fields)
     },
     removeBlog(id: string) {
         return AdminInstance.delete(`blogs/${id}`)
     },
     updateBlog(id: string, param: AddBlogType) {
-        return AdminInstance.put<AddBlogType>(`blogs/${id}`, param)
+        return AdminInstance.put<BlogType>(`blogs/${id}`, param)
     }
 }
 
@@ -65,7 +65,7 @@ export const postsAPI = {
         return AdminInstance.get<PostType>(`posts/${id}`)
     },
     addPost(param: CreatePostType) {
-        return AdminInstance.post<CreatePostType>(`posts/`, param)
+        return AdminInstance.post<CreatePostType>(`posts`, param)
     },
     removePost(id: string) {
         return AdminInstance.delete(`posts/${id}`)

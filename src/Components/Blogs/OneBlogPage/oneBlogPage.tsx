@@ -3,10 +3,9 @@ import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Modal } from '../../../Common/Modal/modal';
-import { getOneBlogTС } from '../../../redux/BlogReducer';
+import {  getBlogPostsTC, getOneBlogTС } from '../../../redux/BlogReducer';
 import { addPostTC } from '../../../redux/PostsReducer';
 import { postsOfOneBlog, selectBlogPage, selectBlogs } from '../../../redux/selectors/blogs-selectors';
-import { selectPosts } from '../../../redux/selectors/posts-selectors';
 import { useAppDispatch } from '../../../redux/store';
 import { pathSiteBarEnum } from '../../MainPage/mainPage';
 import { Post } from '../../Posts/Post/post';
@@ -24,11 +23,14 @@ export const OneBlogPage = () => {
     const [modal, setModal] = useState<boolean>(false)
     const [blogId, setBlogId] = useState<string>('')
 
-
+    
    
 
-
     const {
+
+        
+
+
         register, handleSubmit, formState: { errors }, formState, reset } = useForm({
             mode: 'onBlur',
             defaultValues: {
@@ -39,11 +41,13 @@ export const OneBlogPage = () => {
             }
         });
 
+//find blogId
+
     const onSubmit = (args: any) => {
         args.blogId = blogId
-        dispatch(addPostTC({ args }))
+        dispatch(addPostTC({ args: args, blogId: blogId }))
         reset()
-        setModal(false)
+        setModal(false) 
     }
 
     const params = useParams<'id'>();
@@ -51,9 +55,12 @@ export const OneBlogPage = () => {
 
     useEffect(() => {
         id && dispatch(getOneBlogTС({ id }))
+        id && dispatch(getBlogPostsTC({id}))
     }, [])
 
-    
+   
+   
+
 
     const onClickBackToBlogsHandler = () => {
         navigate(pathSiteBarEnum.blogs)

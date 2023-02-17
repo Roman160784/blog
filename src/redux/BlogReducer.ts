@@ -29,7 +29,7 @@ export type BlogsStateType = {
 
 export const getBlogsTC = createAsyncThunk(
   'blogs/getBlogs',
-  async (param, { dispatch: rejectWithValue }) => {
+  async (param, { dispatch, rejectWithValue }) => {
     try {
       const res = await blogsAPI.getBlogs()
       return { data: res.data, }
@@ -40,10 +40,10 @@ export const getBlogsTC = createAsyncThunk(
 
 export const getBlogPostsTC = createAsyncThunk(
   'blogs/getBlogPosts',
-  async (param: {blogId: string}, { dispatch: rejectWithValue }) => {
+  async (param: {id: string}, { dispatch, rejectWithValue }) => {
     try {
-      const res = await blogsAPI.getBlogPosts(param.blogId)
-      return { data: res.data, blogId: param.blogId }
+      const res = await blogsAPI.getBlogPosts(param.id)
+      return { data: res.data, blogId: param.id }
     } catch (e: any) {
       //return rejectedWithValue({Error: что то описать})
     }
@@ -52,7 +52,7 @@ export const getBlogPostsTC = createAsyncThunk(
 
 export const getOneBlogTС = createAsyncThunk(
   'blogs/getOneBlog',
-  async (param: {id: string}, { dispatch: rejectWithValue }) => {
+  async (param: {id: string}, { dispatch, rejectWithValue }) => {
     try{
       const res = await blogsAPI.getOneBlog(param.id)
       return {data: res.data}
@@ -64,36 +64,36 @@ export const getOneBlogTС = createAsyncThunk(
 
 export const addBlogTC = createAsyncThunk(
   'blogs/addBlog',
-  async (param: {args: AddBlogType}, { dispatch: rejectWithValue }) => {
+  async (param: {args: AddBlogType}, { dispatch, rejectWithValue }) => {
     try{
       const res = await blogsAPI.addBlog(param.args)
       return {data: res.data}
     }catch (e: any) {
-      return rejectWithValue(e)
+      //return rejectedWithValue({Error: что то описать})
     }
   }
 )
 
 export const removeBlogTC = createAsyncThunk(
   'blogs/removeBlog',
-  async (param: {id: string}, { dispatch: rejectWithValue }) =>{
+  async (param: {id: string}, { dispatch, rejectWithValue }) =>{
     try{
       await blogsAPI.removeBlog(param.id)
       return param.id
     }catch (e: any) {
-      return rejectWithValue(e)
+      // return rejectWithValue(e)
     }
   }
 )
 
 export const updateBlogTC = createAsyncThunk(
   'blogs/updateBlog',
-  async (param: {id: string, args: AddBlogType}, {dispatch: rejectWithValue}) => {
+  async (param: {id: string, args: AddBlogType}, {dispatch, rejectWithValue}) => {
     try{
       await blogsAPI.updateBlog(param.id, param.args)
       return {id: param.id, args: param.args}
     }catch(e: any) {
-      return rejectWithValue(e)
+      
     }
   }
 )
@@ -165,7 +165,10 @@ const slice = createSlice({
     })
     // Add Blog
     builder.addCase(addBlogTC.fulfilled, (state, action) => {
-      state.blogs.items.unshift(action.payload.data)
+       if(action.payload?.data){
+         state.blogs.items.unshift(action.payload.data)
+       }
+      
       return state
     })
     builder.addCase(addBlogTC.rejected, (state, { payload }) => {
@@ -181,12 +184,12 @@ const slice = createSlice({
     })
     // Update Blog не правильно
     builder.addCase(updateBlogTC.fulfilled, (state, action) => {
-      const items = state.blogs.items.map(b=> b.id === action.payload.id 
-        ? { ...b, name : action.payload.args.name, description: action.payload.args.description,
-           websiteUrl: action.payload.args.websiteUrl} : b)
-           state.blogs.items = items
+        const items = state.blogs.items.map(b=> b.id === action.payload?.id 
+          ? { ...b, name : action.payload.args.name, description: action.payload.args.description,
+             websiteUrl: action.payload.args.websiteUrl} : b)
+             state.blogs.items = items
+      
       return state
-
     })
     builder.addCase(updateBlogTC.rejected, (state, { payload }) => {
       //to do something inside

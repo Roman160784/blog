@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { CreatePostType, postsAPI } from "../api/bloggerPlatformAPI";
+import { getBlogPostsTC } from "./BlogReducer";
 
 export type PostsType = {
     pagesCount: number
@@ -28,7 +29,7 @@ type initialStateType = {
 
 export const getPostsTC = createAsyncThunk(
     'posts/getPosts',
-    async (param, { dispatch: rejectWithValue }) => {
+    async (param, { dispatch, rejectWithValue }) => {
         try {
             const res = await postsAPI.getPosts()
             return { data: res.data.items }
@@ -40,7 +41,7 @@ export const getPostsTC = createAsyncThunk(
 
 export const getPostTC = createAsyncThunk(
     'posts/getPost',
-    async (param: { id: string }, { dispatch: rejectWithValue }) => {
+    async (param: { id: string }, { dispatch, rejectWithValue }) => {
         try {
             const res = await postsAPI.getPost(param.id)
             return { data: res.data }
@@ -52,10 +53,12 @@ export const getPostTC = createAsyncThunk(
 
 export const addPostTC = createAsyncThunk(
     'posts/createPost',
-    async (param: {args: CreatePostType}, {dispatch: rejectWithValue}) => {
+    async (param: {args: CreatePostType, blogId: string}, {dispatch, rejectWithValue}) => {
         try{
             const res = await postsAPI.addPost(param.args)
+            dispatch(getBlogPostsTC({id: param.args.blogId}))
             return {data: res.data}
+            
         } catch (e: any) {
             //return rejectedWithValue({Error: что то описать}) 
         }
@@ -64,9 +67,12 @@ export const addPostTC = createAsyncThunk(
 
 export const removePostTC = createAsyncThunk(
     'posts/removePost',
-    async (param : {id: string}, {dispatch: rejectWithValue}) => {
+    async (param : {id: string, blogId?: string}, {dispatch, rejectWithValue}) => {
         try {
             const res = await postsAPI.removePost(param.id)
+            if (param.blogId) {
+                dispatch(getBlogPostsTC({id: param.blogId}))
+            }
             return param.id
         }catch (e: any) {
             //return rejectedWithValue({Error: что то описать}) 
@@ -76,7 +82,7 @@ export const removePostTC = createAsyncThunk(
 
 export const updatePostTC = createAsyncThunk(
     'posts/updatePost',
-    async (param: {id: string, args: CreatePostType}, {dispatch: rejectWithValue}) => {
+    async (param: {id: string, args: CreatePostType}, {dispatch, rejectWithValue}) => {
         try{
             const res = await postsAPI.updatePost(param.id, param.args)
             return {id: param.id, args: param.args}

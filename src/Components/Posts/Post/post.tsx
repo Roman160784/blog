@@ -30,7 +30,7 @@ export const Post = ({ post, ...props }: PostPropType) => {
     }
 
     const buttonYes = (id: string) => {
-        dispatch(removePostTC({id}))
+        dispatch(removePostTC({id, blogId: post.blogId}))
         setModal(false)
     }
 
