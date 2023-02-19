@@ -26,12 +26,14 @@ export const Blogs = () => {
     }, [])
 
     const showMoreHandler = () => {
-        debugger
-        if(pageSize< totalCount){
+        if(pageSize < totalCount){
             pageSize+=10
             dispatch(getBlogsTC({pageSize})) 
-        }
+        } else if (totalCount < pageSize)
         setDisable(true) 
+        else {
+            setDisable(true)  
+        }
     }
 
 
@@ -47,6 +49,7 @@ export const Blogs = () => {
 
     const onSubmit = (args: any) => {
         dispatch(addBlogTC({ args }))
+        setDisable(true) 
         setActiveForModal()
     }
 

@@ -23,7 +23,10 @@ export const Posts = () => {
         if( pageSize < totalCount) {
             pageSize += 10
             dispatch(getPostsTC({pageSize}))
-        }else{
+        }else if (totalCount < pageSize){
+            setDisable(true)
+        }
+        else{
             setDisable(true)
         }
         

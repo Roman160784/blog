@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Button } from '../../../Common/Button/button';
 import { Modal } from '../../../Common/Modal/modal';
-import {  getBlogPostsTC, getOneBlogTС } from '../../../redux/BlogReducer';
+import { getBlogPostsTC, getOneBlogTС } from '../../../redux/BlogReducer';
 import { addPostTC } from '../../../redux/PostsReducer';
 import { postsOfOneBlog, selectBlogPage, selectBlogs } from '../../../redux/selectors/blogs-selectors';
 import { useAppDispatch } from '../../../redux/store';
@@ -20,34 +21,38 @@ export const OneBlogPage = () => {
     const navigate = useNavigate()
     const blogPage = useSelector(selectBlogPage)
     const postsOneBlog = useSelector(postsOfOneBlog)
+    let {page, pageSize, pagesCount, totalCount} = useSelector(postsOfOneBlog)
     const [modal, setModal] = useState<boolean>(false)
     const [blogId, setBlogId] = useState<string>('')
+    const [disabled, setDisable] = useState<boolean>(false)
 
-    
-   
+    type argsType = {
+        title: string
+        shortDescription: string
+        content: string
+        blogId: string
+    }
 
     const {
-
-        
-
 
         register, handleSubmit, formState: { errors }, formState, reset } = useForm({
             mode: 'onBlur',
             defaultValues: {
-                title: '',
+                title:  '',
                 shortDescription: '',
                 content: '',
                 blogId: '',
             }
         });
 
-//find blogId
 
-    const onSubmit = (args: any) => {
+
+    const onSubmit = <T extends argsType>(args: T) => {
         args.blogId = blogId
         dispatch(addPostTC({ args: args, blogId: blogId }))
+        setDisable(false)
         reset()
-        setModal(false) 
+        setModal(false)
     }
 
     const params = useParams<'id'>();
@@ -55,11 +60,8 @@ export const OneBlogPage = () => {
 
     useEffect(() => {
         id && dispatch(getOneBlogTС({ id }))
-        id && dispatch(getBlogPostsTC({id}))
+        id && dispatch(getBlogPostsTC({ id }))
     }, [])
-
-   
-   
 
 
     const onClickBackToBlogsHandler = () => {
@@ -73,6 +75,17 @@ export const OneBlogPage = () => {
     const closeModalHandler = () => {
         reset()
         setModal(false)
+    }
+
+    const showMoreHandler = () => {
+        if( pageSize < totalCount) {
+            pageSize += 10
+            id && dispatch(getBlogPostsTC({id: id, args :{pageSize: pageSize}}))
+        }else if (totalCount < pageSize){
+            setDisable(true)
+        }else{
+            setDisable(true)
+        }   
     }
 
     return (
@@ -132,20 +145,21 @@ export const OneBlogPage = () => {
                     </Modal>
 
                 </div>
-                
+
             </div>
             <hr />
-                {
-                    postsOneBlog.items.map(p => {
-                        return(
-                            <div className={st.postsBlock} key={p.id}>
-                            <Post post={p}/>
-                            </div>
-                        )
-                    })
-                }
-              
-
+            {
+                postsOneBlog.items.map(p => {
+                    return (
+                        <div className={st.postsBlock} key={p.id}>
+                            <Post post={p} />
+                        </div>
+                    )
+                })
+            }
+            <div className={st.showMoreButton}>
+                <Button title={'Show more ↓'} onClick={showMoreHandler} disabled={disabled} />
+            </div>
         </div>
 
     )

@@ -79,4 +79,10 @@
     display: inline-block;
     margin-left: 20px;
     margin-top: 20px;
+    width: 30%;
+}
+
+.showMoreButton{
+    margin-left: 30%;
+    margin-top: 20px;
 }

@@ -44,8 +44,8 @@ export const blogsAPI = {
     getOneBlog(id: string) {
         return instance.get<{ id: string }, AxiosResponse<OneBlogResponseType>>(`blogs/${id}`)
     },
-    getBlogPosts(blogId: string) {
-        return instance.get<PostsType>(`blogs/${blogId}/posts`)
+    getBlogPosts(blogId: string, args?:GetPostsArgsType) {
+        return instance.get<PostsType>(`blogs/${blogId}/posts`, {params: args})
     },
     addBlog(fields: AddBlogType) {
         return AdminInstance.post<BlogType>('blogs', fields)
@@ -70,6 +70,7 @@ export type GetPostsArgsType = {
     pageSize?: number
     sortBy?: string
     sortDirection?: string
+    blogId?: string
 }
 
 export const postsAPI = {

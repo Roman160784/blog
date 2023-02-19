@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import thunk from "redux-thunk"
-import { blogsAPI, OneBlogResponseType, AddBlogType, GetBlogsArgsType } from "../api/bloggerPlatformAPI"
+import { blogsAPI, OneBlogResponseType, AddBlogType, GetPostsArgsType } from "../api/bloggerPlatformAPI"
 import { PostsType } from "./PostsReducer"
 
 export type BlogsType = {
@@ -40,9 +40,9 @@ export const getBlogsTC = createAsyncThunk(
 
 export const getBlogPostsTC = createAsyncThunk(
   'blogs/getBlogPosts',
-  async (param: {id: string}, { dispatch, rejectWithValue }) => {
+  async (param: {id: string, args?: GetPostsArgsType}, { dispatch, rejectWithValue} ) => {
     try {
-      const res = await blogsAPI.getBlogPosts(param.id)
+      const res = await blogsAPI.getBlogPosts(param.id, param.args)
       return { data: res.data, blogId: param.id }
     } catch (e: any) {
       //return rejectedWithValue({Error: что то описать})
