@@ -28,10 +28,18 @@ export type AddBlogType = {
     websiteUrl: string
 }
 
+export type GetBlogsArgsType = {
+    searchNameTerm?: string
+    sortBy?: string
+    sortDirection?: string
+    pageNumber?: number
+    pageSize?: number
+}
+
 export const blogsAPI = {
 
-    getBlogs() {
-        return instance.get<BlogsType>('blogs')
+    getBlogs(args?: GetBlogsArgsType) {
+        return instance.get<BlogsType>('blogs', {params: args})
     },
     getOneBlog(id: string) {
         return instance.get<{ id: string }, AxiosResponse<OneBlogResponseType>>(`blogs/${id}`)

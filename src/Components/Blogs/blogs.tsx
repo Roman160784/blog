@@ -13,14 +13,20 @@ import { AddBlogType } from '../../api/bloggerPlatformAPI';
 export const Blogs = () => {
 
     const [modalActive, setModalActive] = useState<boolean>(false);
+    const [pageSize, setPageSize] = useState<number>(10)
 
     const blog = useSelector(selectBlogs)
     const dispatch = useAppDispatch()
   
 
     useEffect(() => {
-        dispatch(getBlogsTC())
+        dispatch(getBlogsTC({}))
     }, [])
+
+    const showMoreHandler = () => {
+        setPageSize(pageSize + 5)
+            dispatch(getBlogsTC({pageSize})) 
+    }
 
 
     const {
@@ -111,6 +117,9 @@ export const Blogs = () => {
                             })
                         }
 
+                    </div>
+                    <div className={st.buttonShowMore}>
+                        <Button title={'Show more ↓'} onClick={showMoreHandler}/>
                     </div>
                 </div>
             </div>
