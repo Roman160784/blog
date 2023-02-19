@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Button } from '../../Common/Button/button';
 import { Modal } from '../../Common/Modal/modal';
 import { addBlogTC, getBlogsTC } from '../../redux/BlogReducer';
-import { selectBlogs } from '../../redux/selectors/blogs-selectors';
+import { selectBlogs, selectBlogsQuery } from '../../redux/selectors/blogs-selectors';
 import { useAppDispatch } from '../../redux/store';
 import { Blog } from './Blog/blog';
 import { useForm } from 'react-hook-form';
@@ -12,10 +12,12 @@ import { AddBlogType } from '../../api/bloggerPlatformAPI';
 
 export const Blogs = () => {
 
+    
     const [modalActive, setModalActive] = useState<boolean>(false);
-    const [pageSize, setPageSize] = useState<number>(10)
+    const [disabled, setDisable] = useState<boolean>(false)
 
     const blog = useSelector(selectBlogs)
+    let {page, pageSize, pagesCount, totalCount} = useSelector(selectBlogsQuery)
     const dispatch = useAppDispatch()
   
 
@@ -24,8 +26,12 @@ export const Blogs = () => {
     }, [])
 
     const showMoreHandler = () => {
-        setPageSize(pageSize + 5)
+        debugger
+        if(pageSize< totalCount){
+            pageSize+=10
             dispatch(getBlogsTC({pageSize})) 
+        }
+        setDisable(true) 
     }
 
 
@@ -55,7 +61,7 @@ export const Blogs = () => {
             <h3 className={st.title}>Blogs</h3>
 
             <div className={st.buttonAdd}>
-                <Button title={'Add new Blog'} onClick={() => { setModalActive(true)}} />
+                <Button title={'Add new Blog'} onClick={() => { setModalActive(true); } } disabled={false} />
             </div>
             <hr />
 
@@ -119,7 +125,7 @@ export const Blogs = () => {
 
                     </div>
                     <div className={st.buttonShowMore}>
-                        <Button title={'Show more ↓'} onClick={showMoreHandler}/>
+                        <Button title={'Show more ↓'} onClick={showMoreHandler} disabled={disabled}/>
                     </div>
                 </div>
             </div>

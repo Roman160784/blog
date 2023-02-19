@@ -29,10 +29,10 @@ type initialStateType = {
 
 export const getPostsTC = createAsyncThunk(
     'posts/getPosts',
-    async (param, { dispatch, rejectWithValue }) => {
+    async (param:{pageNumber?: number, pageSize?: number, sortBy?: string,sortDirection?: string}, { dispatch, rejectWithValue }) => {
         try {
-            const res = await postsAPI.getPosts()
-            return { data: res.data.items }
+            const res = await postsAPI.getPosts(param)
+            return { data: res.data }
         } catch (e: any) {
             //return rejectedWithValue({Error: что то описать}) 
         }
@@ -96,7 +96,7 @@ const initialState: initialStateType = {
     posts: {
         pagesCount: 0,
         page: 0,
-        pageSize: 0,
+        pageSize: 10,
         totalCount: 0,
         items: []
     },
@@ -121,7 +121,7 @@ const slice = createSlice({
         //Get all posts
         builder.addCase(getPostsTC.fulfilled, (state, action) => {
             if(action.payload?.data){
-                state.posts.items = action.payload?.data
+                state.posts = action.payload?.data
             }
             return state
         })

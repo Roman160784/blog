@@ -65,9 +65,16 @@ export type CreatePostType = {
     blogId: string
 }
 
+export type GetPostsArgsType = {
+    pageNumber?: number
+    pageSize?: number
+    sortBy?: string
+    sortDirection?: string
+}
+
 export const postsAPI = {
-    getPosts() {
-        return AdminInstance.get<PostsType>('posts')
+    getPosts(args: GetPostsArgsType) {
+        return AdminInstance.get<PostsType>('posts', {params: args})
     },
     getPost(id: string) {
         return AdminInstance.get<PostType>(`posts/${id}`)
