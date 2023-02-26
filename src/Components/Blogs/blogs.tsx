@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from '../../Common/Button/button';
 import { Modal } from '../../Common/Modal/modal';
@@ -9,21 +9,31 @@ import { Blog } from './Blog/blog';
 import { useForm } from 'react-hook-form';
 import st from './blogs.module.css'
 import { AddBlogType } from '../../api/bloggerPlatformAPI';
+import useDebounce from '../../Hooks/useDebounce';
+
 
 export const Blogs = () => {
 
     
     const [modalActive, setModalActive] = useState<boolean>(false);
     const [disabled, setDisable] = useState<boolean>(false)
+    const [search, setSearch] = useState<string>("");
 
+
+    
     const blog = useSelector(selectBlogs)
+    const debonsedSerchValue = useDebounce( search, 700)
+
+
     let {page, pageSize, pagesCount, totalCount} = useSelector(selectBlogsQuery)
     const dispatch = useAppDispatch()
   
 
     useEffect(() => {
-        dispatch(getBlogsTC({}))
-    }, [])
+        dispatch(getBlogsTC({searchNameTerm: debonsedSerchValue}))
+    }, [debonsedSerchValue])
+
+    
 
     const showMoreHandler = () => {
         if(pageSize < totalCount){
@@ -53,10 +63,19 @@ export const Blogs = () => {
         setActiveForModal()
     }
 
-
     const setActiveForModal = () => {
         setModalActive(false)
         reset()  
+    }
+
+   
+    const searchHandler = (e: ChangeEvent <HTMLInputElement>) => {
+        setSearch(e.currentTarget.value)
+    }
+
+    const seletHandler = (e: ChangeEvent<HTMLSelectElement>) => {
+        let ss = e.currentTarget.value
+           console.log(ss);      
     }
 
     return (
@@ -101,14 +120,15 @@ export const Blogs = () => {
 
             <div className={st.inputBlock}>
                 <div className={st.child1}>
-                    <input className={st.search} placeholder='search' type="text" />
+                    
+                    <input value={search} onChange={searchHandler} className={st.search} placeholder='search' type="text" />
                 </div>
                 <div className={st.child2}>
-                    <select className={st.select} name="blabla" id="1">
-                        <option value="value1">New blogs first</option>
-                        <option value="value1">Old blogs first</option>
-                        <option value="value2">From A to Z</option>
-                        <option value="value3">From Z to A</option>
+                    <select onChange={seletHandler} className={st.select} name="blabla" id="1">
+                        <option  value="1">New blogs first</option>
+                        <option  value="2">Old blogs first</option>
+                        <option  value="3">From A to Z</option>
+                        <option  value="4">From Z to A</option>
                     </select>
                 </div>
 

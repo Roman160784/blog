@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import thunk from "redux-thunk"
 import { blogsAPI, OneBlogResponseType, AddBlogType, GetPostsArgsType } from "../api/bloggerPlatformAPI"
 import { PostsType } from "./PostsReducer"
@@ -116,11 +116,12 @@ const initialState: BlogsStateType = {
   },
   postsOfOneBlog: {
     pagesCount: 0,
-        page: 0,
-        pageSize: 0,
-        totalCount: 0,
-        items: []
-  }
+    page: 0,
+    pageSize: 0,
+    totalCount: 0,
+    items: []
+  },
+
 }
 
 
@@ -128,7 +129,7 @@ const slice = createSlice({
   name: 'blogs',
   initialState: initialState,
   reducers: {
-
+   
   },
   extraReducers: builder => {
     builder.addCase(getBlogsTC.fulfilled, (state, action) => {
@@ -198,3 +199,5 @@ const slice = createSlice({
 })
 
 export const BlogsReducer = slice.reducer
+
+
