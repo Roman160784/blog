@@ -18,20 +18,22 @@ export const Blogs = () => {
     const [modalActive, setModalActive] = useState<boolean>(false);
     const [disabled, setDisable] = useState<boolean>(false)
     const [search, setSearch] = useState<string>("");
+    const [select, setSelect] = useState<string>("");
 
 
     
     const blog = useSelector(selectBlogs)
-    const debonsedSerchValue = useDebounce( search, 700)
-
-
     let {page, pageSize, pagesCount, totalCount} = useSelector(selectBlogsQuery)
+
+
+    const debonsedSerchValue = useDebounce( search, 700)
     const dispatch = useAppDispatch()
   
 
     useEffect(() => {
-        dispatch(getBlogsTC({searchNameTerm: debonsedSerchValue}))
-    }, [debonsedSerchValue])
+        debugger
+        dispatch(getBlogsTC({searchNameTerm: debonsedSerchValue, sortBy: select, sortDirection: select}))
+    }, [debonsedSerchValue, select])
 
     
 
@@ -71,11 +73,11 @@ export const Blogs = () => {
    
     const searchHandler = (e: ChangeEvent <HTMLInputElement>) => {
         setSearch(e.currentTarget.value)
+        setDisable(false) 
     }
 
     const seletHandler = (e: ChangeEvent<HTMLSelectElement>) => {
-        let ss = e.currentTarget.value
-           console.log(ss);      
+        setSelect(e.currentTarget.value)    
     }
 
     return (
@@ -125,10 +127,10 @@ export const Blogs = () => {
                 </div>
                 <div className={st.child2}>
                     <select onChange={seletHandler} className={st.select} name="blabla" id="1">
-                        <option  value="1">New blogs first</option>
-                        <option  value="2">Old blogs first</option>
-                        <option  value="3">From A to Z</option>
-                        <option  value="4">From Z to A</option>
+                        <option  value="createdAt">New blogs first</option>
+                        <option  value="0">Old blogs first</option>
+                        <option  value="asc">From A to Z</option>
+                        <option  value="desc">From Z to A</option>
                     </select>
                 </div>
 

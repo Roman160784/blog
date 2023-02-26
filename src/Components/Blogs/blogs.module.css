@@ -40,6 +40,9 @@ h3 {
 }
 
 .select{
+    border-radius: 5px;
+    padding-left: 5px;
+    height: 25px;
     width: 40%;
 }
 .buttonAdd{

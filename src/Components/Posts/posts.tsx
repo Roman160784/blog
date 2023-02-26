@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from '../../Common/Button/button';
 import { getPostsTC } from '../../redux/PostsReducer';
@@ -12,12 +12,14 @@ export const Posts = () => {
     const dispatch = useAppDispatch() 
     const postsAll = useSelector(selectAllPosts)
     const [disabled, setDisable] = useState<boolean>(false)
+    const [select, setSelect] = useState<string>("");
+
     let {page, pageSize, pagesCount, totalCount} = useSelector(selectPosts)
 
     
     useEffect(() => {
-      dispatch(getPostsTC({}))
-    }, [])
+      dispatch(getPostsTC({sortDirection: select}))
+    }, [select])
 
     const showMoreButtonHandler = () => { 
         if( pageSize < totalCount) {
@@ -29,7 +31,10 @@ export const Posts = () => {
         else{
             setDisable(true)
         }
-        
+    }
+
+    const onChangeSelectHandler = (e: ChangeEvent<HTMLSelectElement>) => {
+        setSelect(e.currentTarget.value)
     }
 
     return (
@@ -39,9 +44,9 @@ export const Posts = () => {
                 <hr />
             </div>
             <div className={st.search}>
-                <select className={st.searchInput} name="blabla" id="1">
-                    <option value="value1">New posts first</option>
-                    <option value="value1">Old posts first</option>
+                <select onChange={onChangeSelectHandler} className={st.searchInput} name="blabla" id="1">
+                    <option value="asc">New posts first</option>
+                    <option value="desc">Old posts first</option>
                 </select>
             </div>
             <ul className={st.mainPostsBlock}>
