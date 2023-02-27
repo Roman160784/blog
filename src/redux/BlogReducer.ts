@@ -32,7 +32,7 @@ export const getBlogsTC = createAsyncThunk(
   async (param: {searchNameTerm?: string, sortBy?: string, sortDirection?: string, pageNumber?: number, pageSize?: number}, { dispatch, rejectWithValue }) => {
     try {
       const res = await blogsAPI.getBlogs(param)
-      return { data: res.data, }
+      return { data: res.data }
     } catch (e: any) {
       //return rejectedWithValue({Error: что то описать})
     }

@@ -11,6 +11,13 @@ import st from './blogs.module.css'
 import { AddBlogType } from '../../api/bloggerPlatformAPI';
 import useDebounce from '../../Hooks/useDebounce';
 
+enum selectEnum {
+    o = "0",
+    createdAt = "createdAt",
+    asc = 'asc',
+    desc = "desc",
+
+}
 
 export const Blogs = () => {
 
@@ -18,7 +25,8 @@ export const Blogs = () => {
     const [modalActive, setModalActive] = useState<boolean>(false);
     const [disabled, setDisable] = useState<boolean>(false)
     const [search, setSearch] = useState<string>("");
-    const [select, setSelect] = useState<string>("");
+    const [selectDate, setSelectDate] = useState<string | undefined>(undefined);
+    const [selectName, setSelectName] = useState<string | undefined>(undefined);
 
 
     
@@ -31,9 +39,8 @@ export const Blogs = () => {
   
 
     useEffect(() => {
-        debugger
-        dispatch(getBlogsTC({searchNameTerm: debonsedSerchValue, sortBy: select, sortDirection: select}))
-    }, [debonsedSerchValue, select])
+        dispatch(getBlogsTC({searchNameTerm: debonsedSerchValue, sortBy: selectDate, sortDirection: selectName}))
+    }, [debonsedSerchValue, selectDate, selectName])
 
     
 
@@ -77,7 +84,14 @@ export const Blogs = () => {
     }
 
     const seletHandler = (e: ChangeEvent<HTMLSelectElement>) => {
-        setSelect(e.currentTarget.value)    
+       const selectValue = e.currentTarget.value       
+       if(selectValue === selectEnum.createdAt || selectValue === selectEnum.o){
+        setSelectDate(selectValue)
+        setSelectName(undefined)
+       } else if (selectValue === selectEnum.asc || selectValue ===  selectEnum.desc) {
+       setSelectName(selectValue)
+       setSelectDate(undefined)
+    }
     }
 
     return (
@@ -127,15 +141,13 @@ export const Blogs = () => {
                 </div>
                 <div className={st.child2}>
                     <select onChange={seletHandler} className={st.select} name="blabla" id="1">
-                        <option  value="createdAt">New blogs first</option>
-                        <option  value="0">Old blogs first</option>
-                        <option  value="asc">From A to Z</option>
-                        <option  value="desc">From Z to A</option>
+                        <option  value={selectEnum.createdAt} >New blogs first</option>
+                        <option  value={selectEnum.o}>Old blogs first</option>
+                        <option  value={selectEnum.asc}>From A to Z</option>
+                        <option  value={selectEnum.desc}>From Z to A</option>
                     </select>
                 </div>
-
                 <div className={st.child3}>
-
                     <div className={st.blogs}>
                         {
                             blog.map(b => {

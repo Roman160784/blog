@@ -45,8 +45,8 @@ export const Posts = () => {
             </div>
             <div className={st.search}>
                 <select onChange={onChangeSelectHandler} className={st.searchInput} name="blabla" id="1">
-                    <option value="asc">New posts first</option>
-                    <option value="desc">Old posts first</option>
+                    <option value="desc">New posts first</option>
+                    <option value="asc">Old posts first</option>
                 </select>
             </div>
             <ul className={st.mainPostsBlock}>
