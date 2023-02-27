@@ -11,7 +11,7 @@ import st from './blogs.module.css'
 import { AddBlogType } from '../../api/bloggerPlatformAPI';
 import useDebounce from '../../Hooks/useDebounce';
 
-enum selectEnum {
+enum SelectEnum {
     o = "0",
     createdAt = "createdAt",
     asc = 'asc',
@@ -85,10 +85,10 @@ export const Blogs = () => {
 
     const seletHandler = (e: ChangeEvent<HTMLSelectElement>) => {
        const selectValue = e.currentTarget.value       
-       if(selectValue === selectEnum.createdAt || selectValue === selectEnum.o){
+       if(selectValue === SelectEnum.createdAt || selectValue === SelectEnum.o){
         setSelectDate(selectValue)
         setSelectName(undefined)
-       } else if (selectValue === selectEnum.asc || selectValue ===  selectEnum.desc) {
+       } else if (selectValue === SelectEnum.asc || selectValue ===  SelectEnum.desc) {
        setSelectName(selectValue)
        setSelectDate(undefined)
     }
@@ -141,10 +141,10 @@ export const Blogs = () => {
                 </div>
                 <div className={st.child2}>
                     <select onChange={seletHandler} className={st.select} name="blabla" id="1">
-                        <option  value={selectEnum.createdAt} >New blogs first</option>
-                        <option  value={selectEnum.o}>Old blogs first</option>
-                        <option  value={selectEnum.asc}>From A to Z</option>
-                        <option  value={selectEnum.desc}>From Z to A</option>
+                        <option  value={SelectEnum.createdAt} >New blogs first</option>
+                        <option  value={SelectEnum.o}>Old blogs first</option>
+                        <option  value={SelectEnum.asc}>From A to Z</option>
+                        <option  value={SelectEnum.desc}>From Z to A</option>
                     </select>
                 </div>
                 <div className={st.child3}>
