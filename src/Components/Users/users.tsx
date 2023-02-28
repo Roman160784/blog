@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useAppDispatch } from '../../redux/store';
+import { getUsersTC } from '../../redux/UsersReducer';
 import { User } from './User/user';
 import st from './users.module.css'
 
 export const Users = () => {
+
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        dispatch(getUsersTC({}))
+    }, [])
+
+
     return (
         <div className={st.usersMainBlock}>
             <div>

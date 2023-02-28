@@ -1,13 +1,14 @@
 import axios, { AxiosResponse } from "axios";
 import { BlogsType, BlogType } from "../redux/BlogReducer";
 import { getPostsTC, PostsType, PostType } from "../redux/PostsReducer";
+import { UsersType } from "../redux/UsersReducer";
 
-export const instance = axios.create({
-    baseURL: 'https://ht-02-03.vercel.app/api/',
-    headers: {
-        Authorization: "Basic YWRtaW46cXdlcnR5",
-    },
-})
+// export const instance = axios.create({
+//     baseURL: 'https://ht-02-03.vercel.app/api/',
+//     headers: {
+//         Authorization: "Basic YWRtaW46cXdlcnR5",
+//     },
+// })
 export const AdminInstance = axios.create({
     baseURL: 'https://ht-02-03.vercel.app/api/',
     headers: {
@@ -39,13 +40,13 @@ export type GetBlogsArgsType = {
 export const blogsAPI = {
 
     getBlogs(args?: GetBlogsArgsType) {
-        return instance.get<BlogsType>('blogs', {params: args})
+        return AdminInstance.get<BlogsType>('blogs', {params: args})
     },
     getOneBlog(id: string) {
-        return instance.get<{ id: string }, AxiosResponse<OneBlogResponseType>>(`blogs/${id}`)
+        return AdminInstance.get<{ id: string }, AxiosResponse<OneBlogResponseType>>(`blogs/${id}`)
     },
     getBlogPosts(blogId: string, args?:GetPostsArgsType) {
-        return instance.get<PostsType>(`blogs/${blogId}/posts`, {params: args})
+        return AdminInstance.get<PostsType>(`blogs/${blogId}/posts`, {params: args})
     },
     addBlog(fields: AddBlogType) {
         return AdminInstance.post<BlogType>('blogs', fields)
@@ -91,3 +92,17 @@ export const postsAPI = {
     }
 }
 
+type getUsersArgsType = {
+    sortBy?: string
+    sortDirection?: string
+    pageNumber?: number
+    pageSize?: number
+    searchLoginTerm?: string
+    searchEmailTerm?: string
+}
+
+export const usersAPI = {
+    getUsers(args: getUsersArgsType){
+        return AdminInstance.get<UsersType>(`users`, {params: args})
+    }
+}

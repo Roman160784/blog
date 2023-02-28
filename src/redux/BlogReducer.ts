@@ -132,6 +132,7 @@ const slice = createSlice({
    
   },
   extraReducers: builder => {
+    //Get Blogs
     builder.addCase(getBlogsTC.fulfilled, (state, action) => {
       const allBlogs = action.payload?.data
       if(allBlogs) {
@@ -139,7 +140,7 @@ const slice = createSlice({
       }
       return state
     })
-    //Get Blogs
+    
     builder.addCase(getBlogsTC.rejected, (state, { payload }) => {
       //to do something inside
     })
