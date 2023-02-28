@@ -1,0 +1,63 @@
+
+.usersMainBlock{
+    margin-top: 30px;
+    margin-left: 30px;
+    
+}
+.inputBlock{
+    margin-top: 20px;
+    margin-bottom: 15px;
+    margin-right: 150px;
+    /* display: flex;
+    justify-content: space-between; */
+    
+}
+
+.inputFirst{
+    width: 41%;
+    height: 30px;
+    border-radius: 3px;
+    padding-left: 10px;
+
+}
+.inputSecond{
+    width: 41%;
+    height: 30px;
+    border-radius: 3px;
+    padding-left: 10px;
+    margin-left: 30px;
+}
+
+.titleBlock{
+    height: 38px;
+    width: 76.5%;
+    border-radius: 2px;
+    background-color: rgb(154, 162, 162);
+    
+}
+
+.titleBlockUser{
+    height: 38px;
+    width: 76.5%;
+    border-radius: 2px;
+    
+}
+
+.titleLogin {
+    font-weight: bold;
+margin-bottom: 15px;
+margin-left: 25px;
+vertical-align: middle
+}
+.titleEmail{
+    font-weight: bold;
+    margin-top: 15px;
+    margin-left: 200px;
+    vertical-align: middle
+}
+.titleDate{
+    font-weight: bold;
+    margin-top: 15px;
+    margin-left: 200px;
+    vertical-align: middle
+}

@@ -5,6 +5,7 @@ import st from './siteBar.module.css'
 export enum pathSiteBarEnum {
     blogs = '/',
     posts = '/posts',
+    users = '/users',
 }
 
 
@@ -21,6 +22,11 @@ export const SaiteBarNav = () => {
                 <div>
                     <NavLink className={st.navigation} to={pathSiteBarEnum.posts}>
                         <h4 className={st.navigation}> Posts</h4>
+                    </NavLink>
+                </div>
+                <div>
+                    <NavLink className={st.navigation} to={pathSiteBarEnum.users}>
+                        <h4 className={st.navigation}> Users</h4>
                     </NavLink>
                 </div>
             </div>

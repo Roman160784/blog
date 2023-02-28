@@ -6,6 +6,7 @@ import { OneBlogPage } from '../Blogs/OneBlogPage/oneBlogPage';
 import { Header } from '../Header/header';
 import { Posts } from '../Posts/posts';
 import { PostPage } from '../Posts/PostsOfBlog/PostPage/postPage';
+import { Users } from '../Users/users';
 import st from './mainPage.module.css'
 
 
@@ -13,6 +14,7 @@ export enum pathSiteBarEnum {
     main = '/',
     blogs = '/',
     posts = '/posts',
+    users = '/users',
     postsOfBlog = '/postsOfBlog/:blogId',
     postPage = '/postPage/:id',
     oneBlogPage = '/oneBlogPage/:id'
@@ -32,6 +34,7 @@ export const MainPage = () => {
                 <Route path={pathSiteBarEnum.posts} element={<Posts/>}/>
                 <Route path={pathSiteBarEnum.postPage} element={<PostPage/>}/>
                 <Route path={pathSiteBarEnum.oneBlogPage} element={<OneBlogPage/>}/>
+                <Route path={pathSiteBarEnum.users} element={<Users/>}/>
                 </Routes>
                 </div>
             </div>

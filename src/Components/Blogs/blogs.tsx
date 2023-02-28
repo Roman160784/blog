@@ -48,11 +48,12 @@ export const Blogs = () => {
         if(pageSize < totalCount){
             pageSize+=10
             dispatch(getBlogsTC({pageSize})) 
-        } else if (totalCount < pageSize)
-        setDisable(true) 
-        else {
+        } else if (totalCount < pageSize){
+            setDisable(true) 
+        }else {
             setDisable(true)  
         }
+        
     }
 
 

@@ -3,10 +3,12 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import thunkMiddleware from "redux-thunk";
 import { BlogsReducer } from "./BlogReducer";
 import { PostsReducer } from "./PostsReducer";
+import { UsersReducer } from "./UsersReducer";
 
 const rootReducer = combineReducers({
     blogs: BlogsReducer,
     posts: PostsReducer,
+    users: UsersReducer,
 })
 
 export type RootReducerType = ReturnType<typeof rootReducer>
