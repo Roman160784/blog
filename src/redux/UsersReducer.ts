@@ -45,8 +45,11 @@ const slice = createSlice({
     extraReducers: builder => {
         //Get users
         builder.addCase(getUsersTC.fulfilled, (state, action) => {
+            debugger
             const users = action.payload
-            if(users) state = users
+            if(users){
+                return state = users
+            } 
           })
           builder.addCase(getUsersTC.rejected, (state, { payload }) => {
             //to do something inside

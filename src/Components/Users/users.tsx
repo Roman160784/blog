@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { selectUsers } from '../../redux/selectors/users-selectors';
 import { useAppDispatch } from '../../redux/store';
 import { getUsersTC } from '../../redux/UsersReducer';
 import { User } from './User/user';
@@ -7,6 +9,8 @@ import st from './users.module.css'
 export const Users = () => {
 
     const dispatch = useAppDispatch()
+
+    const { items, page, pageSize, pagesCount, totalCount } = useSelector(selectUsers)
 
     useEffect(() => {
         dispatch(getUsersTC({}))
@@ -28,7 +32,14 @@ export const Users = () => {
                 <span className={st.titleEmail}>Email</span>
                 <span className={st.titleDate}>Created Date</span>
             </div>
-            <User/>
+            {
+                items.map(u => {
+                    return <div key={u.id}>
+                        <User user={u} />
+                    </div>
+                })
+            }
+
         </div>
     )
 }
