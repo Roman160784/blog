@@ -5,7 +5,7 @@ import { Button } from '../../Common/Button/button';
 import { Modal } from '../../Common/Modal/modal';
 import { selectUsers } from '../../redux/selectors/users-selectors';
 import { useAppDispatch } from '../../redux/store';
-import { getUsersTC } from '../../redux/UsersReducer';
+import { addUserTC, getUsersTC } from '../../redux/UsersReducer';
 import { User } from './User/user';
 import st from './users.module.css'
 
@@ -32,9 +32,9 @@ export const Users = () => {
         });
 
     const onSubmit = (args: any) => {
-        // dispatch(addBlogTC({ args }))
-        setModalActive(false)
+        dispatch(addUserTC(args ))
         reset() 
+        setModalActive(false)  
     }
 
     const addUserButtonHandler = () => {
@@ -56,21 +56,22 @@ export const Users = () => {
                             <div className={st.titleInput}>Login 
                                 <input placeholder='Login' className={st.inputForm} {...register('login', {
                                     required: 'field is required',
-                                    maxLength: { value: 15, message: 'Max Length 15' },
+                                    maxLength: { value: 10, message: 'Max Length 10' },
+                                    minLength: { value: 3, message: 'Min Length 3' },
                                 })} />
                             </div>
                             <div>{errors?.login && <p>{errors.login.message || 'Error'}</p>}</div>
                             <div className={st.titleInput}>Password 
                                 <input placeholder='password' type='password' className={st.inputForm} {...register('password', {
                                     required: 'field is required',
-                                    maxLength: { value: 15, message: 'Max Length 15' },
+                                    maxLength: { value: 20, message: 'Max Length 20' },
+                                    minLength: { value: 6, message: 'Min Length 6' },
                                 })} />
                             </div>
                             <div>{errors.password && <p>{errors.password.message || 'Error'}</p>}</div>
                             <div className={st.titleInput}>Email
                                 <input placeholder='email' className={st.inputForm} {...register('email', {
                                     required: 'field is required',
-                                    maxLength: { value: 15, message: 'Max Length 15' },
                                 })} />
                             </div>
                             <div>{errors.email && <p>{errors.email.message || 'Error'}</p>}</div>

@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { BlogsType, BlogType } from "../redux/BlogReducer";
 import { getPostsTC, PostsType, PostType } from "../redux/PostsReducer";
-import { UsersType } from "../redux/UsersReducer";
+import { UsersType, UserType } from "../redux/UsersReducer";
 
 // export const instance = axios.create({
 //     baseURL: 'https://ht-02-03.vercel.app/api/',
@@ -40,13 +40,13 @@ export type GetBlogsArgsType = {
 export const blogsAPI = {
 
     getBlogs(args?: GetBlogsArgsType) {
-        return AdminInstance.get<BlogsType>('blogs', {params: args})
+        return AdminInstance.get<BlogsType>('blogs', { params: args })
     },
     getOneBlog(id: string) {
         return AdminInstance.get<{ id: string }, AxiosResponse<OneBlogResponseType>>(`blogs/${id}`)
     },
-    getBlogPosts(blogId: string, args?:GetPostsArgsType) {
-        return AdminInstance.get<PostsType>(`blogs/${blogId}/posts`, {params: args})
+    getBlogPosts(blogId: string, args?: GetPostsArgsType) {
+        return AdminInstance.get<PostsType>(`blogs/${blogId}/posts`, { params: args })
     },
     addBlog(fields: AddBlogType) {
         return AdminInstance.post<BlogType>('blogs', fields)
@@ -76,7 +76,7 @@ export type GetPostsArgsType = {
 
 export const postsAPI = {
     getPosts(args: GetPostsArgsType) {
-        return AdminInstance.get<PostsType>('posts', {params: args})
+        return AdminInstance.get<PostsType>('posts', { params: args })
     },
     getPost(id: string) {
         return AdminInstance.get<PostType>(`posts/${id}`)
@@ -101,8 +101,21 @@ type getUsersArgsType = {
     searchEmailTerm?: string
 }
 
+ export type addUserType = {
+    login: string
+    password: string
+    email: string
+}
+
+
 export const usersAPI = {
-    getUsers(args: getUsersArgsType){
-        return AdminInstance.get<UsersType>(`users`, {params: args})
+    getUsers(args: getUsersArgsType) {
+        return AdminInstance.get<UsersType>(`users`, { params: args })
+    },
+    addUser(param: addUserType) {
+        return AdminInstance.post<UserType>(`users`, param)
+    },
+    removeUser(id: string) {
+        return AdminInstance.delete(`users/${id}`)
     }
 }

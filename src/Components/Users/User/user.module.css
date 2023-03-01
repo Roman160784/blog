@@ -18,3 +18,37 @@ vertical-align: middle;
     vertical-align: middle;
    
 }
+
+.yesButton{
+    height: 35px;
+    width: 70px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    background-color: green;
+    font-size: 25px;
+}
+
+.noButton {
+    height: 35px;
+    width: 70px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    background-color: red;
+    font-size: 25px;
+}
+
+.modalTitle{
+    font-size: 25px;
+}
+
+.modalBlock{
+    background-color: rgb(173, 189, 185);
+    border-radius: 10px;
+}
+
+.buttonBlock {
+    display: flex;
+    justify-content: space-around;
+}
