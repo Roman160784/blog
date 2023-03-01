@@ -64,3 +64,53 @@
     margin-left: 200px;
     vertical-align: middle
 }
+
+.userBlock {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.buttonBlock {
+    margin-top: -23px;
+    margin-left: 63%;
+}
+
+.modalBlock {
+    background-color: rgb(164, 172, 170);
+    border-radius: 10px;
+}
+
+.closeButton {
+    width: 30px;
+    height: 30px;
+    background-color: red;
+    border-radius: 50%;
+    margin-top: 10px;
+    margin-bottom: 7px;
+    margin-left: 450px;
+
+}
+
+.titleInput{
+    font-size: 25px;
+}
+
+.inputForm {
+    font-size: 20px;
+    width: 400px;
+    height: 40px;
+    border-radius: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.createBlogButton{
+    font-size: 25px;
+    width: 250px;
+    height: 40px;
+    border-radius: 5px;
+    color: beige;
+    background: green;
+    margin-bottom: 10px;
+}

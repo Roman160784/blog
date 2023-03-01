@@ -1,15 +1,20 @@
 .titleLogin {
 margin-bottom: 15px;
 margin-left: 25px;
-vertical-align: middle
+vertical-align: middle;
+
+
 }
 .titleEmail{
     margin-top: 15px;
     margin-left: 205px;
-    vertical-align: middle
+    vertical-align: middle;
+    
+    
 }
 .titleDate{
     margin-top: 15px;
     margin-left: 205px;
-    vertical-align: middle
+    vertical-align: middle;
+   
 }
