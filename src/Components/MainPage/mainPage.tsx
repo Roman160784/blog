@@ -4,6 +4,7 @@ import { SaiteBarNav } from '../../Navigation/navlinkSiteBar';
 import { Blogs } from '../Blogs/blogs';
 import { OneBlogPage } from '../Blogs/OneBlogPage/oneBlogPage';
 import { Header } from '../Header/header';
+import { Login } from '../Login/loginPage';
 import { Posts } from '../Posts/posts';
 import { PostPage } from '../Posts/PostsOfBlog/PostPage/postPage';
 import { Users } from '../Users/users';
@@ -24,6 +25,7 @@ export const MainPage = () => {
     return (
         <div className={st.wrapper}>
                 <Header />
+                {/* <Login/> */}
             <div className={st.mainBlock}>
                 <div className={st.child1}>
                 <SaiteBarNav />

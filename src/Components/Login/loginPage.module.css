@@ -1,0 +1,76 @@
+.blockLogin {
+    border-radius: 10px;
+    background-color: #fff;
+    width: 350px;
+    min-height: 470px;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    min-height: 50vh;
+    margin: auto;
+    padding: 50px 0 0;
+}
+
+h1 {
+    text-align: center;
+}
+
+.inputLogin {
+    width: 300px;
+    margin-top: 10px;
+    box-sizing: border-box;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid black;
+    outline-color: blue;
+}
+
+.errors {
+    color: red;
+}
+
+.checkboxLogin {
+    margin-top: 10px;
+}
+
+.forgot, .signUp {
+    text-align: center;
+    color: black;
+    text-decoration: none;
+    margin-top: 30px;
+}
+
+.signUp {
+    margin-bottom: 10px;
+}
+
+.forgot:hover, .signUp:hover {
+    text-decoration: underline;
+    color: limegreen;
+}
+
+.buttonLogin {
+    justify-content: center;
+    width: 250px;
+    margin: 40px auto 0;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    background: linear-gradient(135deg, #baf792 0%, #0eaf0e 100%);
+    color: white;
+    cursor: pointer;
+    transition: background 9999999s;
+}
+
+.buttonLogin:hover {
+    background: linear-gradient(135deg, #0eaf0e 100%, #baf792 0%);
+    color: white;
+}
+
+.buttonLogin:active {
+    background: linear-gradient(135deg, #0eaf0e 100%, #baf792 0%);
+    transition: background 0s;
+}
