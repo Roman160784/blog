@@ -1,25 +1,33 @@
-.titleLogin {
-margin-bottom: 15px;
-margin-left: 25px;
-vertical-align: middle;
-
-
+.userBlock {
+    display: flex;
+    text-align: center;
+    justify-content: space-around;
 }
-.titleEmail{
-    margin-top: 15px;
-    margin-left: 205px;
-    vertical-align: middle;
+
+
+
+.login{
+    text-align: center;
+    margin-left: -650px;
+    width: 25%;
+}
+.email{
+    text-align: center;
+    margin-left: -1000px;
+    width: 25%;
+}
+.date{
+    text-align: center;
+    margin-left: -1100px;
+    width: 25%;
+}
+.remove{
+    text-align: center;
+    margin-left: -900px;
     
-    
-}
-.titleDate{
-    margin-top: 15px;
-    margin-left: 205px;
-    vertical-align: middle;
-   
 }
 
-.yesButton{
+.yesButton {
     height: 35px;
     width: 70px;
     border-radius: 5px;
@@ -39,11 +47,11 @@ vertical-align: middle;
     font-size: 25px;
 }
 
-.modalTitle{
+.modalTitle {
     font-size: 25px;
 }
 
-.modalBlock{
+.modalBlock {
     background-color: rgb(173, 189, 185);
     border-radius: 10px;
 }

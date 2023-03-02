@@ -28,7 +28,7 @@ export const User = ({user, ...props} : UserPropsType) => {
      }
     
     return(
-        <div >
+        <div className={st.userBlock}>
             <Modal active={active} setActive={undefined} >
                 <div className={st.modalBlock}>
                     <div className={st.modalTitle}>Are you really wants to delete User?</div>
@@ -38,10 +38,18 @@ export const User = ({user, ...props} : UserPropsType) => {
                     </div>
                 </div>
             </Modal>
-            <span className={st.titleLogin}>{user.login}</span>
-            <span className={st.titleEmail}>{user.email}</span>
-            <span className={st.titleDate}>{user.createdAt}</span>
+            <div className={st.login}>
+            {user.login}
+            </div>
+            <div className={st.email}>
+            {user.email}
+            </div>
+            <div className={st.date}>
+           {user.createdAt}
+            </div>
+            <div className={st.remove}>
             <Button disabled={false} title={'Remove User'} onClick={() => {buttonRemoveHandler(user.id)}}/>
+            </div>
         </div>
         )
 }

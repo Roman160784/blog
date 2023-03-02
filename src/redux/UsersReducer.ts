@@ -1,5 +1,6 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { addUserType, usersAPI } from "../api/bloggerPlatformAPI"
+import { RootState } from "./store"
 
 export type UsersType = {
     pagesCount: number
@@ -41,6 +42,7 @@ export const addUserTC = createAsyncThunk(
     async (param: addUserType, { dispatch, rejectWithValue }) => {
         try {
             const res = await usersAPI.addUser(param)
+            dispatch(getUsersTC({}))
             return res.data
         } catch (e: any) {
             //return rejectedWithValue({Error: что то описать})
@@ -50,9 +52,12 @@ export const addUserTC = createAsyncThunk(
 
 export const removeUserTC = createAsyncThunk(
     'users/removeUser',
-    async(param: {id: string}, { dispatch, rejectWithValue }) => {
+    async(param: {id: string}, { dispatch, getState,  rejectWithValue }) => {
+       const allState = getState() as RootState
+       const page = allState.users.page
         try{
             await usersAPI.removeUser(param.id)
+            dispatch(getUsersTC({pageNumber: page}))
             return param.id
         }catch (e: any) {
             //return rejectedWithValue({Error: что то описать})
@@ -64,7 +69,7 @@ const slice = createSlice({
     name: 'users',
     initialState: initialState,
     reducers: {
-
+       
     },
     extraReducers: builder => {
         //Get users

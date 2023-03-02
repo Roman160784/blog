@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { Button } from '../../Common/Button/button';
 import { Modal } from '../../Common/Modal/modal';
+import { Pagenator } from '../../Common/Pagenator/pagenator';
 import { selectUsers } from '../../redux/selectors/users-selectors';
 import { useAppDispatch } from '../../redux/store';
 import { addUserTC, getUsersTC } from '../../redux/UsersReducer';
@@ -18,7 +19,7 @@ export const Users = () => {
 
     useEffect(() => {
         dispatch(getUsersTC({}))
-    }, [])
+    }, [pagesCount])
 
 
     const {
@@ -97,6 +98,9 @@ export const Users = () => {
                             </div>
                         })
                     }
+                    <div>
+                    <Pagenator totalCount={totalCount} pagesCount={pagesCount} page={page} portionSize={pageSize}/>
+                    </div>
 
             </div>
             )
