@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { Button } from '../../Common/Button/button';
 import { Modal } from '../../Common/Modal/modal';
 import { Pagenator } from '../../Common/Pagenator/pagenator';
+import useDebounce from '../../Hooks/useDebounce';
 import { selectUsers } from '../../redux/selectors/users-selectors';
 import { useAppDispatch } from '../../redux/store';
 import { addUserTC, getUsersTC } from '../../redux/UsersReducer';
@@ -12,14 +13,18 @@ import st from './users.module.css'
 
 export const Users = () => {
 
+    
     const dispatch = useAppDispatch()
 
+    const [search, setSearch] = useState<string>('')
     const [modalActive, setModalActive] = useState<boolean>(false);
     const { items, page, pageSize, pagesCount, totalCount } = useSelector(selectUsers)
 
+    const debonsedSerchValue = useDebounce( search, 700)
+
     useEffect(() => {
-        dispatch(getUsersTC({}))
-    }, [pagesCount])
+        dispatch(getUsersTC({searchLoginTerm: debonsedSerchValue, searchEmailTerm: debonsedSerchValue }))
+    }, [pagesCount, debonsedSerchValue])
 
 
     const {
@@ -41,6 +46,24 @@ export const Users = () => {
     const addUserButtonHandler = () => {
         setModalActive(true)
     }
+
+    const searchHandler = (e: ChangeEvent <HTMLInputElement>) => {
+        setSearch(e.currentTarget.value)
+    }
+
+    const sortMinEmail = () => {
+        dispatch(getUsersTC({sortDirection: 'asc'}))
+    }
+    const sortMaxEmail = () => {
+        dispatch(getUsersTC({sortDirection: 'desc'}))
+    }
+    const sortMinDate = () => {
+        dispatch(getUsersTC({sortBy: 'createdAt'}))
+    }
+    const sortMaxDate = () => {
+        dispatch(getUsersTC({sortBy: '0'}))
+    }
+    
 
 
     return (
@@ -82,14 +105,32 @@ export const Users = () => {
                         </Modal>
                         <hr />
                         <div className={st.inputBlock}>
-                            <input className={st.inputFirst} type="text" placeholder='search Login' />
-                            <input className={st.inputSecond} type="text" placeholder='search Email' />
+                            <input value={search} onChange={searchHandler} 
+                            className={st.inputFirst} type="text" placeholder='search Login' />
+                            <input value={search} onChange={searchHandler} 
+                            className={st.inputSecond} type="text" placeholder='search Email' />
                         </div>
                     </div>
                     <div className={st.titleBlock}>
                         <span className={st.titleLogin}>Login</span>
+                        <span className={st.boxArrow}>
+                        <i className={`${st.arrow} ${st.arrowUp}`}
+                           onClick={sortMinEmail}>
+                        </i>
+                        <i className={`${st.arrow} ${st.arrowDown}`}
+                           onClick={sortMaxEmail}>
+                        </i>
+                        </span>
                         <span className={st.titleEmail}>Email</span>
-                        <span className={st.titleDate}>Created Date</span>
+                        <span className={st.titleDate}>Created Date </span>
+                        <span className={st.boxArrow}>
+                        <i className={`${st.arrow} ${st.arrowUp}`}
+                           onClick={sortMinDate}>
+                        </i>
+                        <i className={`${st.arrow} ${st.arrowDown}`}
+                           onClick={sortMaxDate}>
+                        </i>
+                        </span>
                     </div>
                     {
                         items.map(u => {

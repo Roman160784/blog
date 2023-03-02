@@ -115,3 +115,29 @@
     margin-bottom: 10px;
 }
 
+a .arrow {
+    display: inline-block;
+}
+
+.arrow::before {
+    content: "";
+    display: inline-block;
+    border: 10px solid rgb(35, 36, 35);
+    border-right-width: 5px;
+    border-left-width: 5px;
+    border-right-color: transparent;
+    border-left-color: transparent;
+    cursor: pointer;
+}
+
+.boxArrow {
+    margin-left: 5px;
+}
+
+.arrowUp::before {
+    border-top-width: 0;
+}
+
+.arrowDown::before {
+    border-bottom-width: 0;
+}
