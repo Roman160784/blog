@@ -119,3 +119,13 @@ export const usersAPI = {
         return AdminInstance.delete(`users/${id}`)
     }
 }
+
+export type LoginisationType = {
+    loginOrEmail: string
+    password: string
+}
+export const authApi = {
+    logIn(param: LoginisationType) {
+        return AdminInstance.post(`auth/login`, param)
+    }
+}

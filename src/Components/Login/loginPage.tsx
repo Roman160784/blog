@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { loginisationTC } from '../../redux/LoginReducer';
 import { useAppDispatch } from '../../redux/store';
 import st from './loginPage.module.css'
 
@@ -17,7 +18,7 @@ export const Login = () => {
         });
 
     const onSubmit = (args: any) => {
-        // dispatch(addBlogTC({ args }))
+        dispatch(loginisationTC(args))
 
     }
 
