@@ -41,3 +41,5 @@ const slice = createSlice({
       })
   }
 })
+
+export const AuthReducer = slice.reducer
