@@ -5,10 +5,12 @@ import { authApi, LoginisationType } from "../api/bloggerPlatformAPI"
 
 export const loginisationTC = createAsyncThunk(
     'auth/isLoginisation',
-    async (param: {login: LoginisationType}, {dispatch, rejectWithValue}) => {
+    async (param: {args: LoginisationType}, {dispatch, rejectWithValue}) => {
         try{
-            await authApi.logIn(param.login)
-            return true
+           const res = await authApi.logIn(param.args)
+            if(res.data){
+              return true
+            }
           }catch(e: any) {
             
           }
@@ -33,6 +35,9 @@ const slice = createSlice({
   extraReducers: builder => {
     // Is Login
     builder.addCase(loginisationTC.fulfilled, (state, action) => {
+      if(action.payload){
+       state.isLogin = action.payload
+      }
         return state
       })
       

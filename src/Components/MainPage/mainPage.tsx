@@ -18,7 +18,8 @@ export enum pathSiteBarEnum {
     users = '/users',
     postsOfBlog = '/postsOfBlog/:blogId',
     postPage = '/postPage/:id',
-    oneBlogPage = '/oneBlogPage/:id'
+    oneBlogPage = '/oneBlogPage/:id',
+    login = '/login'
 }
 export const MainPage = () => {
 
@@ -32,6 +33,7 @@ export const MainPage = () => {
                 </div>
                 <div className={st.child2}>
                 <Routes>
+                <Route path={pathSiteBarEnum.login} element={<Login/>}/>
                 <Route path={pathSiteBarEnum.blogs} element={<Blogs/>}/>
                 <Route path={pathSiteBarEnum.posts} element={<Posts/>}/>
                 <Route path={pathSiteBarEnum.postPage} element={<PostPage/>}/>

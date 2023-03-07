@@ -10,6 +10,9 @@ import { useForm } from 'react-hook-form';
 import st from './blogs.module.css'
 import { AddBlogType } from '../../api/bloggerPlatformAPI';
 import useDebounce from '../../Hooks/useDebounce';
+import { selectLogin } from '../../redux/selectors/login-selectors';
+import { Navigate } from 'react-router-dom';
+import { pathSiteBarEnum } from '../MainPage/mainPage';
 
 enum SelectEnum {
     o = "0",
@@ -29,20 +32,22 @@ export const Blogs = () => {
     const [selectName, setSelectName] = useState<string | undefined>(undefined);
 
 
-    
+    const isLogin = useSelector(selectLogin)
     const blog = useSelector(selectBlogs)
     let {page, pageSize, pagesCount, totalCount} = useSelector(selectBlogsQuery)
 
 
+    
     const debonsedSerchValue = useDebounce( search, 700)
     const dispatch = useAppDispatch()
   
+   
 
     useEffect(() => {
         dispatch(getBlogsTC({searchNameTerm: debonsedSerchValue, sortBy: selectDate, sortDirection: selectName}))
     }, [debonsedSerchValue, selectDate, selectName])
 
-    
+   
 
     const showMoreHandler = () => {
         if(pageSize < totalCount){
@@ -56,6 +61,7 @@ export const Blogs = () => {
         
     }
 
+    
 
     const {
         register, handleSubmit, formState: { errors }, formState, reset } = useForm({
@@ -94,6 +100,8 @@ export const Blogs = () => {
        setSelectDate(undefined)
     }
     }
+
+    if (isLogin === false ) return <Navigate to={pathSiteBarEnum.login}/>
 
     return (
         <div className={st.blogColor}>
