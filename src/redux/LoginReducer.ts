@@ -37,12 +37,12 @@ export const loginisationTC = createAsyncThunk(
 
 export type LoginStateType = {
   isLogin: boolean
-  preloder: boolean
+  autorised: boolean
 }
 
 const initialState: LoginStateType = {
   isLogin: false,
-  preloder: true,
+  autorised: true,
 }
 
 const slice = createSlice({
@@ -64,7 +64,7 @@ const slice = createSlice({
     //is Auth 
     builder.addCase(checkAuthTC.fulfilled, (state, action) => {
       if (action.payload) {
-        state.isLogin = true
+        state.autorised = true
       }
       return state
     })
