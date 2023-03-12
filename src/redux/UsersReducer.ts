@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { addUserType, usersAPI } from "../api/bloggerPlatformAPI"
+import { setAppStatusAC } from "./AppReducer"
 import { RootState } from "./store"
 
 export type UsersType = {
@@ -28,25 +29,31 @@ const initialState: UsersType = {
 export const getUsersTC = createAsyncThunk(
     'users/getUsers',
     async (param: { sortBy?: string, sortDirection?: string, pageNumber?: number, pageSize?: number, searchLoginTerm?: string, searchEmailTerm?: string }, { dispatch, rejectWithValue }) => {
+        dispatch(setAppStatusAC({status: 'loading'}))
         try {
             const res = await usersAPI.getUsers(param)
             return res.data
         } catch (e: any) {
             //return rejectedWithValue({Error: что то описать})
-        }
+        }finally{
+            dispatch(setAppStatusAC({status: 'succeeded'})) 
+          }
     }
 )
 
 export const addUserTC = createAsyncThunk(
     'users/addUser',
     async (param: addUserType, { dispatch, rejectWithValue }) => {
+        dispatch(setAppStatusAC({status: 'loading'}))
         try {
             const res = await usersAPI.addUser(param)
             dispatch(getUsersTC({}))
             return res.data
         } catch (e: any) {
             //return rejectedWithValue({Error: что то описать})
-        }
+        }finally{
+            dispatch(setAppStatusAC({status: 'succeeded'})) 
+          }
     }
 )
 
@@ -55,13 +62,16 @@ export const removeUserTC = createAsyncThunk(
     async(param: {id: string}, { dispatch, getState,  rejectWithValue }) => {
        const allState = getState() as RootState
        const page = allState.users.page
-        try{
+       dispatch(setAppStatusAC({status: 'loading'}))
+       try{
             await usersAPI.removeUser(param.id)
             dispatch(getUsersTC({pageNumber: page}))
             return param.id
         }catch (e: any) {
             //return rejectedWithValue({Error: что то описать})
-        }
+        }finally{
+            dispatch(setAppStatusAC({status: 'succeeded'})) 
+          }
     }
 )
 

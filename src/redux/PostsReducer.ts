@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { CreatePostType, postsAPI } from "../api/bloggerPlatformAPI";
+import { setAppStatusAC } from "./AppReducer";
 import { getBlogPostsTC } from "./BlogReducer";
 
 export type PostsType = {
@@ -30,30 +31,37 @@ type initialStateType = {
 export const getPostsTC = createAsyncThunk(
     'posts/getPosts',
     async (param:{pageNumber?: number, pageSize?: number, sortBy?: string,sortDirection?: string}, { dispatch, rejectWithValue }) => {
+        dispatch(setAppStatusAC({status: 'loading'}))
         try {
             const res = await postsAPI.getPosts(param)
             return { data: res.data }
         } catch (e: any) {
             //return rejectedWithValue({Error: что то описать}) 
-        }
+        }finally{
+            dispatch(setAppStatusAC({status: 'succeeded'})) 
+          }
     }
 )
 
 export const getPostTC = createAsyncThunk(
     'posts/getPost',
     async (param: { id: string }, { dispatch, rejectWithValue }) => {
+        dispatch(setAppStatusAC({status: 'loading'}))
         try {
             const res = await postsAPI.getPost(param.id)
             return { data: res.data }
         } catch (e: any) {
             //return rejectedWithValue({Error: что то описать}) 
-        }
+        }finally{
+            dispatch(setAppStatusAC({status: 'succeeded'})) 
+          }
     }
 )
 
 export const addPostTC = createAsyncThunk(
     'posts/createPost',
     async (param: {args: CreatePostType, blogId: string}, {dispatch, rejectWithValue}) => {
+        dispatch(setAppStatusAC({status: 'loading'}))
         try{
             const res = await postsAPI.addPost(param.args)
             dispatch(getBlogPostsTC({id: param.args.blogId}))
@@ -61,13 +69,16 @@ export const addPostTC = createAsyncThunk(
             
         } catch (e: any) {
             //return rejectedWithValue({Error: что то описать}) 
-        }
+        }finally{
+            dispatch(setAppStatusAC({status: 'succeeded'})) 
+          }
     }
 )
 
 export const removePostTC = createAsyncThunk(
     'posts/removePost',
     async (param : {id: string, blogId?: string}, {dispatch, rejectWithValue}) => {
+        dispatch(setAppStatusAC({status: 'loading'}))
         try {
             const res = await postsAPI.removePost(param.id)
             if (param.blogId) {
@@ -76,19 +87,24 @@ export const removePostTC = createAsyncThunk(
             return param.id
         }catch (e: any) {
             //return rejectedWithValue({Error: что то описать}) 
-        }
+        }finally{
+            dispatch(setAppStatusAC({status: 'succeeded'})) 
+          }
     }
 )
 
 export const updatePostTC = createAsyncThunk(
     'posts/updatePost',
     async (param: {id: string, args: CreatePostType}, {dispatch, rejectWithValue}) => {
+        dispatch(setAppStatusAC({status: 'loading'}))
         try{
             const res = await postsAPI.updatePost(param.id, param.args)
             return {id: param.id, args: param.args}
         }catch (e: any) {
             //return rejectedWithValue({Error: что то описать}) 
-        }
+        }finally{
+            dispatch(setAppStatusAC({status: 'succeeded'})) 
+          }
     }
 )
 

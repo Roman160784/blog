@@ -1,16 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { authApi, LoginisationType } from "../api/bloggerPlatformAPI"
+import { setAppStatusAC } from "./AppReducer"
 
 
 
 export const checkAuthTC = createAsyncThunk(
   'auth/getUserForLOginithation',
   async (param: { accessToken: string | null }, { dispatch, rejectWithValue }) => {
+    dispatch(setAppStatusAC({status: 'loading'}))
     try {
       const res = await authApi.authMe(param.accessToken)
       return res.data
     } catch (e: any) {
 
+    }finally{
+      dispatch(setAppStatusAC({status: 'succeeded'})) 
     }
   }
 )
@@ -18,6 +22,7 @@ export const checkAuthTC = createAsyncThunk(
 export const loginisationTC = createAsyncThunk(
   'auth/isLoginisation',
   async (param: { args: LoginisationType }, { dispatch, rejectWithValue }) => {
+    dispatch(setAppStatusAC({status: 'loading'}))
     try {
       const res = await authApi.logIn(param.args)
       if (res.data) {
@@ -29,6 +34,8 @@ export const loginisationTC = createAsyncThunk(
       }
     } catch (e: any) {
 
+    }finally{
+      dispatch(setAppStatusAC({status: 'succeeded'})) 
     }
   }
 
