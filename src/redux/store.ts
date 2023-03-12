@@ -1,6 +1,7 @@
 import { combineReducers, configureStore, Middleware } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import thunkMiddleware from "redux-thunk";
+import { appReducer } from "./AppReducer";
 import { BlogsReducer } from "./BlogReducer";
 import { AuthReducer } from "./LoginReducer";
 import { PostsReducer } from "./PostsReducer";
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
     posts: PostsReducer,
     users: UsersReducer,
     auth: AuthReducer,
+    app: appReducer,
 })
 
 export type RootReducerType = ReturnType<typeof rootReducer>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Preloader } from '../../Common/Preloader/preloader';
 import { SaiteBarNav } from '../../Navigation/navlinkSiteBar';
+import { selectStatus } from '../../redux/selectors/app-selectors';
 import { Blogs } from '../Blogs/blogs';
 import { OneBlogPage } from '../Blogs/OneBlogPage/oneBlogPage';
 import { Header } from '../Header/header';
@@ -9,6 +10,7 @@ import { Login } from '../Login/loginPage';
 import { Posts } from '../Posts/posts';
 import { PostPage } from '../Posts/PostsOfBlog/PostPage/postPage';
 import { Users } from '../Users/users';
+import { useSelector } from 'react-redux';
 import st from './mainPage.module.css'
 
 
@@ -24,6 +26,9 @@ export enum pathSiteBarEnum {
 }
 export const MainPage = () => {
 
+    const appStatus = useSelector(selectStatus)
+
+
     return (
         <div className={st.wrapper}>
                 <Header />
@@ -32,7 +37,7 @@ export const MainPage = () => {
                 <SaiteBarNav />
                 </div>
                 <div className={st.child2}>
-                <Preloader/>
+                    {appStatus === 'loading' && <Preloader/>}
                 <Routes>
                 <Route path={pathSiteBarEnum.login} element={<Login/>}/>
                 <Route path={pathSiteBarEnum.blogs} element={<Blogs/>}/>
