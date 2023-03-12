@@ -26,7 +26,6 @@ export const MainPage = () => {
     return (
         <div className={st.wrapper}>
                 <Header />
-                {/* <Login/> */}
             <div className={st.mainBlock}>
                 <div className={st.child1}>
                 <SaiteBarNav />

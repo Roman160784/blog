@@ -8,12 +8,12 @@ import { useAppDispatch } from '../../redux/store';
 import { Blog } from './Blog/blog';
 import { useForm } from 'react-hook-form';
 import st from './blogs.module.css'
-import { AddBlogType } from '../../api/bloggerPlatformAPI';
 import useDebounce from '../../Hooks/useDebounce';
 import { selectLogin } from '../../redux/selectors/login-selectors';
 import { Navigate } from 'react-router-dom';
 import { pathSiteBarEnum } from '../MainPage/mainPage';
 import { checkAuthTC } from '../../redux/LoginReducer';
+import { Preloader } from '../../Common/Preloader/preloader';
 
 enum SelectEnum {
     o = "0",
@@ -114,10 +114,10 @@ export const Blogs = () => {
             <h3 className={st.title}>Blogs</h3>
 
             <div className={st.buttonAdd}>
+            
                 <Button title={'Add new Blog'} onClick={() => { setModalActive(true); } } disabled={false} />
             </div>
             <hr />
-
             <Modal active={modalActive} setActive={setActiveForModal} >
                 <div className={st.modalBlock}>
                     <button onClick={setActiveForModal} className={st.closeButton}>X</button>

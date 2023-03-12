@@ -37,10 +37,12 @@ export const loginisationTC = createAsyncThunk(
 
 export type LoginStateType = {
   isLogin: boolean
+  preloder: boolean
 }
 
 const initialState: LoginStateType = {
-  isLogin: false
+  isLogin: false,
+  preloder: true,
 }
 
 const slice = createSlice({
