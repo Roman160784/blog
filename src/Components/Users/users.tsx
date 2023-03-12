@@ -1,13 +1,16 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 import { Button } from '../../Common/Button/button';
 import { Modal } from '../../Common/Modal/modal';
 import { Pagenator } from '../../Common/Pagenator/pagenator';
 import useDebounce from '../../Hooks/useDebounce';
+import { selectLogin } from '../../redux/selectors/login-selectors';
 import { selectUsers } from '../../redux/selectors/users-selectors';
 import { useAppDispatch } from '../../redux/store';
 import { addUserTC, getUsersTC } from '../../redux/UsersReducer';
+import { pathSiteBarEnum } from '../MainPage/mainPage';
 import { User } from './User/user';
 import st from './users.module.css'
 
@@ -19,7 +22,8 @@ export const Users = () => {
     const [search, setSearch] = useState<string>('')
     const [modalActive, setModalActive] = useState<boolean>(false);
     const { items, page, pageSize, pagesCount, totalCount } = useSelector(selectUsers)
-
+    const isLogin = useSelector(selectLogin)
+    
     const debonsedSerchValue = useDebounce( search, 700)
 
     useEffect(() => {
@@ -64,7 +68,7 @@ export const Users = () => {
         dispatch(getUsersTC({sortBy: '0'}))
     }
     
-
+    if (isLogin === false ) return <Navigate to={pathSiteBarEnum.login}/>
 
     return (
         <div className={st.usersMainBlock}>

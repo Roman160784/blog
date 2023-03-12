@@ -64,7 +64,7 @@ const slice = createSlice({
     //is Auth 
     builder.addCase(checkAuthTC.fulfilled, (state, action) => {
       if (action.payload) {
-        state.autorised = true
+        state.isLogin = true
       }
       return state
     })
