@@ -128,7 +128,7 @@ export const authApi = {
     logIn(param: LoginisationType) {
         return AdminInstance.post(`auth/login`, param)
     },
-    authMe(accessToken: string) {
+    authMe(accessToken: string | null) {
         return AdminInstance.get(`auth/me`, {headers: { Authorization: "Bearer " + accessToken,} } )
     }
 }

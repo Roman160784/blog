@@ -13,6 +13,7 @@ import useDebounce from '../../Hooks/useDebounce';
 import { selectLogin } from '../../redux/selectors/login-selectors';
 import { Navigate } from 'react-router-dom';
 import { pathSiteBarEnum } from '../MainPage/mainPage';
+import { checkAuthTC } from '../../redux/LoginReducer';
 
 enum SelectEnum {
     o = "0",
@@ -41,6 +42,11 @@ export const Blogs = () => {
     const debonsedSerchValue = useDebounce( search, 700)
     const dispatch = useAppDispatch()
   
+    useEffect(() => {
+        if(localStorage.getItem('token')) {
+            dispatch(checkAuthTC({accessToken: localStorage.getItem('token')}))
+        }
+    }, [])
    
 
     useEffect(() => {
