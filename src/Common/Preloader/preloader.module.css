@@ -1,6 +1,4 @@
-.body{
-    margin: 0;
-}
+
 
 .loader{
    top: 50%;
@@ -11,6 +9,9 @@
     border-radius: 50%;
     border-bottom: 5px solid rgb(8, 48, 61);
     animation: 1s animate infinite linear;
+    position: fixed;
+    display: block;
+    z-index:99999999;   
 }
 
 @keyframes animate {

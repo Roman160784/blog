@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { Preloader } from '../../Common/Preloader/preloader';
 import { SaiteBarNav } from '../../Navigation/navlinkSiteBar';
 import { Blogs } from '../Blogs/blogs';
 import { OneBlogPage } from '../Blogs/OneBlogPage/oneBlogPage';
@@ -31,6 +32,7 @@ export const MainPage = () => {
                 <SaiteBarNav />
                 </div>
                 <div className={st.child2}>
+                <Preloader/>
                 <Routes>
                 <Route path={pathSiteBarEnum.login} element={<Login/>}/>
                 <Route path={pathSiteBarEnum.blogs} element={<Blogs/>}/>

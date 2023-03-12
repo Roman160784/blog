@@ -112,9 +112,7 @@ export const Blogs = () => {
     return (
         <div className={st.blogColor}>
             <h3 className={st.title}>Blogs</h3>
-
             <div className={st.buttonAdd}>
-            
                 <Button title={'Add new Blog'} onClick={() => { setModalActive(true); } } disabled={false} />
             </div>
             <hr />
