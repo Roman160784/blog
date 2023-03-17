@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { BlogsType, BlogType } from "../redux/BlogReducer";
+import { CommentsType, CommentType } from "../redux/CommentsReducer";
 import { getPostsTC, PostsType, PostType } from "../redux/PostsReducer";
 import { UsersType, UserType } from "../redux/UsersReducer";
 
@@ -56,7 +57,7 @@ export const blogsAPI = {
     },
     updateBlog(id: string, param: AddBlogType) {
         return AdminInstance.put<BlogType>(`blogs/${id}`, param)
-    }
+    },
 }
 
 export type CreatePostType = {
@@ -89,7 +90,7 @@ export const postsAPI = {
     },
     updatePost(id: string, param: CreatePostType) {
         return AdminInstance.put<CreatePostType>(`posts/${id}`, param)
-    }
+    },
 }
 
 type getUsersArgsType = {
@@ -117,7 +118,7 @@ export const usersAPI = {
     },
     removeUser(id: string) {
         return AdminInstance.delete(`users/${id}`)
-    }
+    },
 }
 
 export type LoginisationType = {
@@ -130,5 +131,15 @@ export const authApi = {
     },
     authMe(accessToken: string | null) {
         return AdminInstance.get(`auth/me`, {headers: { Authorization: "Bearer " + accessToken,} } )
+    },
+}
+
+export const commentsAPI = {
+    addComment(postId: string, content: string, accessToken: string | null) {
+        return AdminInstance.post<CommentType>(`posts/${postId}/comments`,  {content: content}, 
+        {headers: { Authorization: "Bearer " + accessToken}}, )
+    },
+    getComments(postId?: string){
+        return AdminInstance.get<CommentsType>(`posts/${postId}/comments`)
     }
 }

@@ -1,0 +1,23 @@
+.comentsBlock{
+    margin-top: 20px;
+}
+
+.title{
+    margin-top: 20px; 
+}
+
+.coment{
+    margin-top: 20px; 
+    margin-bottom: 10px;
+    width: 50%;
+    height: 50px;
+    padding-left: 10px;
+} 
+
+.error{
+    color: red
+}
+
+.showMore{
+    margin-left: 37%;
+}

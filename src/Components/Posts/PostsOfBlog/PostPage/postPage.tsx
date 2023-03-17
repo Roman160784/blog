@@ -3,9 +3,11 @@ import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Modal } from '../../../../Common/Modal/modal';
+import { getCommentsTC } from '../../../../redux/CommentsReducer';
 import { getPostTC, removePostTC, updatePostTC } from '../../../../redux/PostsReducer';
 import { selectOnePost } from '../../../../redux/selectors/posts-selectors';
 import { useAppDispatch } from '../../../../redux/store';
+import { Coments } from '../../../Coments/coments';
 import { pathSiteBarEnum } from '../../../MainPage/mainPage';
 import st from './postPage.module.css'
 
@@ -31,6 +33,10 @@ export const PostPage = () => {
     useEffect(()=> {
         id && dispatch(getPostTC({id}))
     },[])
+
+    useEffect(() => {
+        dispatch(getCommentsTC({ postId: id }))
+    }, [])
 
     //form for update post
     const {
@@ -139,6 +145,9 @@ export const PostPage = () => {
                             </form>
                         </div>
             </Modal>
+            <div>
+            <Coments postId={onePost.id}/>
+            </div>
         </div>
         
     )
