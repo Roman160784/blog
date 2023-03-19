@@ -2,7 +2,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from '../../Common/Button/button';
-import { addCommentTC } from '../../redux/CommentsReducer';
+import { addCommentTC, getCommentsTC } from '../../redux/CommentsReducer';
 import { selectComments } from '../../redux/selectors/comments-selectors';
 import { useAppDispatch } from '../../redux/store';
 import { Coment } from './Coment/coment';
@@ -17,8 +17,9 @@ export const Coments = ({ postId, ...props }: ComentsPropsType) => {
 
     const [content, setContent] = useState<string>('')
     const [error, setError] = useState<string | null>('')
+    const [disabled, setDisable] = useState<boolean>(false)
 
-    const {page, pageSize, items, pagesCount, totalCount} = useSelector(selectComments)
+    let {page, pageSize, items, pagesCount, totalCount} = useSelector(selectComments)
 
     const dispatch = useAppDispatch()
 
@@ -42,6 +43,19 @@ export const Coments = ({ postId, ...props }: ComentsPropsType) => {
         setError(null)
     }
 
+    const showMoreHandler = () => {
+        if( pageSize < totalCount) {
+            pageSize += 10
+            dispatch(getCommentsTC({ postId: postId,  pageSize: pageSize}))
+        }else if (totalCount < pageSize){
+            setDisable(true)
+        }
+        else{
+            setDisable(true)
+        }
+        
+    }
+
 
     return (
         <div className={st.comentsBlock}>
@@ -62,7 +76,7 @@ export const Coments = ({ postId, ...props }: ComentsPropsType) => {
               }) 
             }
             <div className={st.showMore}>
-            <Button disabled={false} title={'Show more'} onClick={canclelButtonHandler} />
+            <Button disabled={disabled} title={'Show more ↓'} onClick={showMoreHandler} />
             </div>
         </div>
     )

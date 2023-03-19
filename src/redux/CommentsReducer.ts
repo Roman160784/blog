@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { commentsAPI } from "../api/bloggerPlatformAPI"
+import { commentsAPI, GetCommentsType } from "../api/bloggerPlatformAPI"
 import { setAppStatusAC } from "./AppReducer"
 
 export type CommentType = {
@@ -34,10 +34,11 @@ const initialState: CommentsType = {
 
 export const getCommentsTC = createAsyncThunk(
     'comments/getComments',
-    async (param: { postId?: string }, { dispatch, rejectWithValue }) => {
+    async (param: { pageSize?: number, pageNumber?: number, postId: string, sortBy?: string, sortDirection?: string  },
+         { dispatch, rejectWithValue }) => {
         dispatch(setAppStatusAC({ status: 'loading' }))
         try {
-            const res = await commentsAPI.getComments(param.postId)
+            const res = await commentsAPI.getComments({postId: param.postId, pageSize: param.pageSize})
             return { data: res.data }
         } catch (e: any) {
             //return rejectedWithValue({Error: что то описать})

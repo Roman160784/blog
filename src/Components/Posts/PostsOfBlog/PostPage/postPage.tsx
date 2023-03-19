@@ -15,27 +15,29 @@ import st from './postPage.module.css'
 export const PostPage = () => {
 
     const dispatch = useAppDispatch()
-    const navigate = useNavigate() 
+    const navigate = useNavigate()
 
     const onePost = useSelector(selectOnePost)
-   
+
     //for update modal
     const [active, setActive] = useState<boolean>(false)
     const [blogId, setBlogId] = useState<string>('')
     const [postId, setPostId] = useState<string>('')
     // fo remove modal
     const [modal, setModal] = useState<boolean>(false)
-    
+
 
     const params = useParams<'id'>();
     const id = params.id
 
-    useEffect(()=> {
-        id && dispatch(getPostTC({id}))
-    },[])
+    useEffect(() => {
+        id && dispatch(getPostTC({ id }))
+    }, [])
 
     useEffect(() => {
-        dispatch(getCommentsTC({ postId: id }))
+        if (id) {
+            dispatch(getCommentsTC({ postId: id }))
+        }
     }, [])
 
     //form for update post
@@ -52,12 +54,12 @@ export const PostPage = () => {
 
     const onSubmit = (args: any) => {
         args.blogId = blogId
-        dispatch(updatePostTC({id: postId, args }))
+        dispatch(updatePostTC({ id: postId, args }))
         reset()
         setActive(false)
     }
 
-    
+
 
     // remove Post 
     const onClickBackToPostsHandler = () => {
@@ -73,7 +75,7 @@ export const PostPage = () => {
     }
 
     const buttonYes = (id: string) => {
-        dispatch(removePostTC({id}))
+        dispatch(removePostTC({ id }))
         navigate(pathSiteBarEnum.posts)
         setModal(false)
     }
@@ -90,14 +92,14 @@ export const PostPage = () => {
         reset()
         setActive(false)
     }
-    
+
     return (
         <div className={st.pagePostBlok}>
             <div className={st.nav} onClick={onClickBackToPostsHandler}> ← Back to posts</div>
             <div>
                 <img className={st.avatar} src="https://w7.pngwing.com/pngs/862/646/png-transparent-beard-hipster-male-man-avatars-xmas-giveaway-icon-thumbnail.png" alt="avatar" />
                 <span className={st.blogName}>{onePost.blogName}</span>
-                <button onClick={() => {updateButtonHandler(onePost.id, onePost.blogId)}} className={st.updateButton}>Update post</button>
+                <button onClick={() => { updateButtonHandler(onePost.id, onePost.blogId) }} className={st.updateButton}>Update post</button>
                 <button onClick={removePostButton} className={st.updateButton}>Remove post</button>
             </div>
             <div>
@@ -107,48 +109,48 @@ export const PostPage = () => {
                 <div className={st.conrent}>{onePost.content}</div>
             </div>
             <Modal active={modal} setActive={undefined} >
-                    <div className={st.modalBlock}>
-                        <h4 className={st.modalTitle}>Do you wants to remove post?</h4>
-                        <div className={st.buttonBlock}>
-                            <button onClick={() => {buttonYes(onePost.id)}} className={st.yes}>Yes</button>
-                            <button onClick={buttonNo} className={st.no}>No</button>
-                        </div>
+                <div className={st.modalBlock}>
+                    <h4 className={st.modalTitle}>Do you wants to remove post?</h4>
+                    <div className={st.buttonBlock}>
+                        <button onClick={() => { buttonYes(onePost.id) }} className={st.yes}>Yes</button>
+                        <button onClick={buttonNo} className={st.no}>No</button>
                     </div>
-                </Modal>
+                </div>
+            </Modal>
             <Modal active={active} setActive={undefined} >
-            <div className={st.createPostBlock}>
-                            <h3>Create your post</h3>
-                            <form onSubmit={handleSubmit(onSubmit)}>
-                                <div className={st.modalTitle}>Title
-                                    <input placeholder='title' className={st.modalInput} {...register('title', {
-                                        required: 'field is required',
-                                        maxLength: { value: 30, message: 'Max Length 30' },
-                                    })} />
-                                </div>
-                                <div>{errors?.title && <p>{errors.title.message || 'Error'}</p>}</div>
-                                <div className={st.modalTitle}>about
-                                    <input placeholder='discription' className={st.modalInput} {...register('shortDescription', {
-                                        required: 'field is required',
-                                        maxLength: { value: 100, message: 'Max Length 100' },
-                                    })} />
-                                </div>
-                                <div>{errors.shortDescription && <p>{errors.shortDescription.message || 'Error'}</p>}</div>
-                                <div className={st.titleInput}>
-                                    <textarea maxLength={1000} placeholder='content' className={st.textArea} {...register('content', {
-                                        required: 'field is required',
-                                        maxLength: { value: 1000, message: 'Max Length 1000' },
-                                    })} />
-                                </div>
-                                <div>{errors.content && <p>{errors.content.message || 'Error'}</p>}</div>
-                                <input className={st.updatePostButton} type="submit" value='Create your post' />
-                                <button onClick={closeModalHandler} className={st.closePostButton}>Close</button>
-                            </form>
+                <div className={st.createPostBlock}>
+                    <h3>Create your post</h3>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <div className={st.modalTitle}>Title
+                            <input placeholder='title' className={st.modalInput} {...register('title', {
+                                required: 'field is required',
+                                maxLength: { value: 30, message: 'Max Length 30' },
+                            })} />
                         </div>
+                        <div>{errors?.title && <p>{errors.title.message || 'Error'}</p>}</div>
+                        <div className={st.modalTitle}>about
+                            <input placeholder='discription' className={st.modalInput} {...register('shortDescription', {
+                                required: 'field is required',
+                                maxLength: { value: 100, message: 'Max Length 100' },
+                            })} />
+                        </div>
+                        <div>{errors.shortDescription && <p>{errors.shortDescription.message || 'Error'}</p>}</div>
+                        <div className={st.titleInput}>
+                            <textarea maxLength={1000} placeholder='content' className={st.textArea} {...register('content', {
+                                required: 'field is required',
+                                maxLength: { value: 1000, message: 'Max Length 1000' },
+                            })} />
+                        </div>
+                        <div>{errors.content && <p>{errors.content.message || 'Error'}</p>}</div>
+                        <input className={st.updatePostButton} type="submit" value='Create your post' />
+                        <button onClick={closeModalHandler} className={st.closePostButton}>Close</button>
+                    </form>
+                </div>
             </Modal>
             <div>
-            <Coments postId={onePost.id}/>
+                <Coments postId={onePost.id} />
             </div>
         </div>
-        
+
     )
 }

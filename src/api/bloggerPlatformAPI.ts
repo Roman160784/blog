@@ -134,13 +134,21 @@ export const authApi = {
     },
 }
 
+export type GetCommentsType = {
+    pageSize?: number
+    pageNumber?: number
+    postId: string
+    sortBy?: string
+    sortDirection?: string
+}
+
 export const commentsAPI = {
     addComment(postId: string, content: string, accessToken: string | null) {
         return AdminInstance.post<CommentType>(`posts/${postId}/comments`,  {content: content}, 
         {headers: { Authorization: "Bearer " + accessToken}}, )
     },
-    getComments(postId?: string){
-        return AdminInstance.get<CommentsType>(`posts/${postId}/comments`)
+    getComments(args: GetCommentsType){
+        return AdminInstance.get<CommentsType>(`posts/${args.postId}/comments`, { params: args })
     },
     removeComment(commentId : string, accessToken: string | null){
         return AdminInstance.delete(`comments/${commentId}`, {headers: { Authorization: "Bearer " + accessToken}})
