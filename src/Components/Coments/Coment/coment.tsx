@@ -18,7 +18,7 @@ export const Coment = ({comment, ...props}: ComentPropsType) => {
             <div>
                 <EditableSpan title={comment.content} changeTitle={() => { }} />
             </div>
-            <Button disabled={false} title={'Remove'} onClick={() => { }} />
+            <Button disabled={false} title={'Remove comment'} onClick={() => { }} />
         </div>
     )
 

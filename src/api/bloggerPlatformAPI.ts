@@ -141,5 +141,8 @@ export const commentsAPI = {
     },
     getComments(postId?: string){
         return AdminInstance.get<CommentsType>(`posts/${postId}/comments`)
+    },
+    removeComent(commentId : string, accessToken: string){
+        return AdminInstance.delete(`comments/${commentId}`, {headers: { Authorization: "Bearer " + accessToken}})
     }
 }

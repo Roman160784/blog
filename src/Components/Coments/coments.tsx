@@ -45,7 +45,7 @@ export const Coments = ({ postId, ...props }: ComentsPropsType) => {
 
     return (
         <div className={st.comentsBlock}>
-            <h3 className={st.title}>{`Comments(${totalCount})`}</h3>
+            <h3 className={st.title}>{`Comments (${totalCount})`}</h3>
             <input value={content} className={st.coment} onChange={onChangeHandler} type="text" placeholder='Provide your coment...' />
             {error && <div className={st.error}>{error}</div>}
             <div>
