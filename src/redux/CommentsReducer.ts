@@ -63,6 +63,22 @@ export const addCommentTC = createAsyncThunk(
     }
 )
 
+export const updateCommentTC = createAsyncThunk(
+    'comments/updateComment',
+    async (param: { commentId: string, content: string }, { dispatch, rejectWithValue }) => {
+        dispatch(setAppStatusAC({ status: 'loading' }))
+        const accessToken = localStorage.getItem('token')
+        try {
+            const res = await commentsAPI.updateComment(param.commentId, param.content, accessToken)
+            return { data: res.data.content,  commentId: param.commentId}
+        } catch (e: any) {
+            //return rejectedWithValue({Error: что то описать})
+        } finally {
+            dispatch(setAppStatusAC({ status: 'succeeded' }))
+        }
+    }
+)
+
 export const removeCommentTC = createAsyncThunk(
     'comments/removeComment',
     async (param: { commentId: string }, { dispatch, rejectWithValue }) => {
@@ -111,6 +127,14 @@ const slice = createSlice({
             return state
         })
         builder.addCase(removeCommentTC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+        //Update comment
+        builder.addCase(updateCommentTC.fulfilled, (state, action) => {
+            state.items.map(c => c.id === action.payload?.commentId ? {...c, content: action.payload.data} : c)
+            return state
+        })
+        builder.addCase(updateCommentTC.rejected, (state, { payload }) => {
             //to do something inside
         })
     }
