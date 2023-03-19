@@ -69,8 +69,8 @@ export const updateCommentTC = createAsyncThunk(
         dispatch(setAppStatusAC({ status: 'loading' }))
         const accessToken = localStorage.getItem('token')
         try {
-            const res = await commentsAPI.updateComment(param.commentId, param.content, accessToken)
-            return { data: res.data.content,  commentId: param.commentId}
+            await commentsAPI.updateComment(param.commentId, param.content, accessToken)
+            return { data: param.content,  commentId: param.commentId}
         } catch (e: any) {
             //return rejectedWithValue({Error: что то описать})
         } finally {
@@ -131,7 +131,8 @@ const slice = createSlice({
         })
         //Update comment
         builder.addCase(updateCommentTC.fulfilled, (state, action) => {
-            state.items.map(c => c.id === action.payload?.commentId ? {...c, content: action.payload.data} : c)
+            const items = state.items.map(c => c.id === action.payload?.commentId ? {...c, content: action.payload.data} : c)
+            state.items = items
             return state
         })
         builder.addCase(updateCommentTC.rejected, (state, { payload }) => {

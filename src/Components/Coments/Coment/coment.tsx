@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { Button } from '../../../Common/Button/button';
 import { EditableSpan } from '../../../Common/EditableSpan/editableSpan';
 import { Modal } from '../../../Common/Modal/modal';
-import { CommentType, removeCommentTC } from '../../../redux/CommentsReducer';
+import { CommentType, removeCommentTC, updateCommentTC } from '../../../redux/CommentsReducer';
 import { useAppDispatch } from '../../../redux/store';
 import st from './coment.module.css'
 
@@ -13,6 +13,7 @@ type ComentPropsType = {
 export const Coment = ({ comment, ...props }: ComentPropsType) => {
 
     const [modal, setModal] = useState<boolean>(false)
+    
 
     const dispatch = useAppDispatch()
 
@@ -27,6 +28,10 @@ export const Coment = ({ comment, ...props }: ComentPropsType) => {
     const buttonYesHandler = (commentId: string) => {
         dispatch(removeCommentTC({ commentId }))
         setModal(false)
+    }
+
+    const updatePostHandler = (commentId: string, title: string) => {
+        dispatch(updateCommentTC({ commentId: commentId, content: title}))
     }
 
     return (
@@ -44,7 +49,7 @@ export const Coment = ({ comment, ...props }: ComentPropsType) => {
                 </div>
             </Modal>
             <div>
-                <EditableSpan title={comment.content} changeTitle={() => { }} />
+                <EditableSpan title={comment.content} changeTitle={(title) => {updatePostHandler(comment.id, title)}} />
             </div>
             <Button disabled={false} title={'Remove comment'} onClick={removePostHandler} />
         </div>
