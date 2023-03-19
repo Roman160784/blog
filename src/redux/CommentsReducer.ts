@@ -69,7 +69,7 @@ export const removeCommentTC = createAsyncThunk(
         dispatch(setAppStatusAC({ status: 'loading' }))
         const accessToken = localStorage.getItem('token')
         try {
-            commentsAPI.removeComent(param.commentId, accessToken)
+            commentsAPI.removeComment(param.commentId, accessToken)
             return param.commentId
         } catch (e: any) {
             //return rejectedWithValue({Error: что то описать})
