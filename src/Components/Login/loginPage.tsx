@@ -44,6 +44,7 @@ export const Login = () => {
                             minLength: { value: 3, message: 'Min Length 3' },
                         })}
                     />
+                    <div>{'Roma160784'}</div>
                 </div>
                 <div>
                     <input type='text' className={st.inputLogin} placeholder={'Password'}
@@ -53,6 +54,7 @@ export const Login = () => {
                             minLength: { value: 6, message: 'Min Length 6' },
                         })}
                     />
+                     <div>{'160784'}</div>
                 </div>
                 <input className={st.buttonLogin} type="submit" value='Login' />
             </form>
