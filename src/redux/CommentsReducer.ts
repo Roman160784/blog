@@ -75,11 +75,17 @@ const slice = createSlice({
             if(action.payload) {
                 return state = action.payload.data
             }
-            
         })
         builder.addCase(getCommentsTC.rejected, (state, { payload }) => {
             //to do something inside
           })
+         //Add comment 
+        builder.addCase(addCommentTC.fulfilled, (state, action) => {
+            if(action.payload){
+              state.items.unshift(action.payload?.data)
+            }
+            return state
+        })
     }
 })
 
