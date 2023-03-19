@@ -63,6 +63,22 @@ export const addCommentTC = createAsyncThunk(
     }
 )
 
+export const removeCommentTC = createAsyncThunk(
+    'comments/removeComment',
+    async (param: { commentId: string }, { dispatch, rejectWithValue }) => {
+        dispatch(setAppStatusAC({ status: 'loading' }))
+        const accessToken = localStorage.getItem('token')
+        try {
+            commentsAPI.removeComent(param.commentId, accessToken)
+            return param.commentId
+        } catch (e: any) {
+            //return rejectedWithValue({Error: что то описать})
+        } finally {
+            dispatch(setAppStatusAC({ status: 'succeeded' }))
+        }
+    }
+)
+
 const slice = createSlice({
     name: 'comments',
     initialState: initialState,
@@ -72,19 +88,30 @@ const slice = createSlice({
     extraReducers: builder => {
         //Get comments
         builder.addCase(getCommentsTC.fulfilled, (state, action) => {
-            if(action.payload) {
+            if (action.payload) {
                 return state = action.payload.data
             }
         })
         builder.addCase(getCommentsTC.rejected, (state, { payload }) => {
             //to do something inside
-          })
-         //Add comment 
+        })
+        //Add comment 
         builder.addCase(addCommentTC.fulfilled, (state, action) => {
-            if(action.payload){
-              state.items.unshift(action.payload?.data)
+            if (action.payload) {
+                state.items.unshift(action.payload?.data)
             }
             return state
+        })
+        builder.addCase(addCommentTC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+        //Remove comment
+        builder.addCase(removeCommentTC.fulfilled, (state, action) => {
+            state.items.forEach((c, i) => c.id === action.payload ? state.items.splice(i, 1) : c)
+            return state
+        })
+        builder.addCase(removeCommentTC.rejected, (state, { payload }) => {
+            //to do something inside
         })
     }
 })

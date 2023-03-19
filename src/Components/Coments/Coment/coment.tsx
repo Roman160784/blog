@@ -1,7 +1,8 @@
 import React from 'react';
 import { Button } from '../../../Common/Button/button';
 import { EditableSpan } from '../../../Common/EditableSpan/editableSpan';
-import { CommentType } from '../../../redux/CommentsReducer';
+import { CommentType, removeCommentTC } from '../../../redux/CommentsReducer';
+import { useAppDispatch } from '../../../redux/store';
 import st from './coment.module.css'
 
 type ComentPropsType = {
@@ -9,6 +10,12 @@ type ComentPropsType = {
 }
 
 export const Coment = ({comment, ...props}: ComentPropsType) => {
+
+    const dispatch = useAppDispatch() 
+
+    const removePostHandler = (commentId: string) => {
+        dispatch(removeCommentTC({commentId}))
+    }
 
     return (
         <div className={st.comentBlock}>
@@ -18,7 +25,7 @@ export const Coment = ({comment, ...props}: ComentPropsType) => {
             <div>
                 <EditableSpan title={comment.content} changeTitle={() => { }} />
             </div>
-            <Button disabled={false} title={'Remove comment'} onClick={() => { }} />
+            <Button disabled={false} title={'Remove comment'} onClick={() => {removePostHandler(comment.id)}} />
         </div>
     )
 
