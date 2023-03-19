@@ -17,3 +17,36 @@
 .date{
     margin-left: 10px;
 }
+
+.modal{
+    background-color: rgb(236, 237, 240);
+    border-radius: 10px;
+}
+
+.modalTitle{
+    font-size: 25px;
+}
+
+.modalButtonBlock{
+    padding-top: 10px;
+    padding-bottom: 15px;
+    margin-top: 15px;
+}
+
+.buttonYes{
+    background-color: green;
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    font-size: 20px;
+    color: white;
+    margin-right: 60px;
+}
+.buttonNo{
+    background-color: red;
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    font-size: 20px;
+    color: white;
+}
